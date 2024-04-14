@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PixelGunCheat", "PixelGunCheat\PixelGunCheat.vcxproj", "{75D1F584-0BAC-47AE-9DA4-332BC5E571F4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GirlKisser", "GirlKisser\GirlKisser.vcxproj", "{75D1F584-0BAC-47AE-9DA4-332BC5E571F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

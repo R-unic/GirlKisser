@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{75D1F584-0BAC-47AE-9DA4-332BC5E571F4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>PixelGunCheat</RootNamespace>
+    <RootNamespace>GirlKisser</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -209,7 +209,7 @@
       <ProgramDataBaseFileName>x64\Release\vc143.pdb</ProgramDataBaseFileName>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderOutputFile>x64\Release\PixelGunCheat.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>x64\Release\GirlKisser.pch</PrecompiledHeaderOutputFile>
       <PreprocessToFile>false</PreprocessToFile>
       <PreprocessKeepComments>false</PreprocessKeepComments>
       <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
@@ -224,7 +224,7 @@
       <SpectreMitigation>false</SpectreMitigation>
       <StructMemberAlignment>Default</StructMemberAlignment>
       <SupportJustMyCode>false</SupportJustMyCode>
-      <TrackerLogDirectory>x64\Release\PixelGunCheat.tlog\</TrackerLogDirectory>
+      <TrackerLogDirectory>x64\Release\GirlKisser.tlog\</TrackerLogDirectory>
       <TranslateIncludes>false</TranslateIncludes>
       <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
       <TreatWarningAsError>false</TreatWarningAsError>
