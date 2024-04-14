@@ -36,7 +36,7 @@ public:
         ImGui::GetBackgroundDrawList()->AddRectFilled({x, y}, {x + 200 * GKImGuiHooker::scale_factor, y + modc * (size + 2) + 10}, color_bg, 10);
         for (auto& module : module_list)
         {
-            if (module->enabled)
+            if (module->enabled && module->name != this->module->name)
             {
                 ImGui::GetBackgroundDrawList()->AddText(NULL, size, {x + 5, y + 2}, color_array, module->name.c_str());
                 y += size + 2;
