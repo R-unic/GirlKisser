@@ -8,11 +8,13 @@
 #include <vector>
 #include <algorithm>
 #include <filesystem>
+#include <thread>
+#include <map>
+#include <MinHook.h>
 
 #include "imgui_hooker.h"
 #include "../Logger/Logger.h"
 #include "../Hooks/Hooks.h"
-#include <thread>
 
 #pragma comment( lib, "d3d11.lib" )
 
@@ -24,11 +26,13 @@ void CleanupRenderTarget();
 WPARAM MapLeftRightKeys(const MSG& msg);
 
 std::stringstream full_title;
+std::string combo_file = "default";
 static char config_file[32] = "default";
+static char offsets_rhd[32] = "";
+static char return_rhd[32] = "";
+static LPVOID last_rhd = nullptr;
 static ImU32 color_title = ImGui::ColorConvertFloat4ToU32({0.875f, 0.12f, 0.9f, 1.00f});
 static ImU32 color_bg = ImGui::ColorConvertFloat4ToU32({0.00f, 0.00f, 0.00f, 0.75f});
-std::string combo_file = "default";
-std::string current_font = "C:/Windows/Fonts/calibril.ttf";
 static bool boundless_value_setting = false;
 
 void InitModules(const std::vector<GKModule>& init_mods);
@@ -44,17 +48,44 @@ struct Theme
     ImVec4 highlight;
 };
 
+std::string current_font = "C:/Windows/Fonts/calibril.ttf";
+std::string current_theme = "GirlKisser";
+
+std::vector<std::string> get_native_font_list(bool ttf_only)
+{
+    std::vector<std::string> paths;
+    const std::string path = "C:/Windows/Fonts";
+    for (const auto& entry : std::filesystem::directory_iterator(path))
+    {
+        const std::filesystem::path& p = entry.path();
+        if (ttf_only && !p.extension().string().contains("ttf")) continue;
+        if (p.extension().string().contains("wing")) continue;
+        // std::string str_path = p.generic_string();
+        // str_path = str_path.replace(str_path.begin(), str_path.end(), "/", "\\");
+        paths.push_back(p.generic_string());
+    }
+    return paths;
+}
+
+auto fonts = get_native_font_list(true);
+std::vector<std::string> themes = {"GirlKisser"};
+
 // https://github.com/ocornut/imgui/issues/707
 void init_style()
 {
+    Logger::log_info("Initialized GUI style");
     auto style = &ImGui::GetStyle();
     auto colors = style->Colors;
-    auto theme = Theme {
-        ImVec4(0.00f, 0.00f, 0.00f, 0.00f),
-        ImVec4(0.49f, 0.145f, 0.439f, 1.00f),
-        ImVec4(0.875f, 0.12f, 0.9f, 1.00f),
-        ImVec4(0.82f, 0.35f, 0.75f, 1.00f),
-    };
+    Theme theme;
+    if (current_theme == "GirlKisser")
+    {
+        theme = {
+            ImVec4(0.00f, 0.00f, 0.00f, 0.00f),
+            ImVec4(0.49f, 0.145f, 0.439f, 1.00f),
+            ImVec4(0.875f, 0.12f, 0.9f, 1.00f),
+            ImVec4(0.82f, 0.35f, 0.75f, 1.00f)
+        };
+    }
 
     colors[ImGuiCol_Text]                   = ImVec4(0.92f, 0.92f, 0.92f, 1.00f);
     colors[ImGuiCol_TextDisabled]           = ImVec4(0.44f, 0.44f, 0.44f, 1.00f);
@@ -158,6 +189,41 @@ void GetDesktopResolution(int& horizontal, int& vertical)
     // (horizontal, vertical)
     horizontal = desktop.right;
     vertical = desktop.bottom;
+}
+
+inline int(__stdcall* rhd_original)(void* arg);
+inline int __stdcall rhd(void* arg)
+{
+    Logger::log_debug("Dev Hook Called!");
+    return std::stoi(return_rhd);
+}
+
+void try_runtime_hook()
+{
+    if (!last_rhd == 0)
+    {
+        Logger::log_debug("Clearing Last Hook");
+        MH_DisableHook(last_rhd);
+        MH_RemoveHook(last_rhd);
+    }
+    uint64_t offset;
+    std::stringstream stringstream;
+    stringstream << std::hex << offsets_rhd;
+    stringstream >> offset;
+    std::stringstream s2;
+    if (offset == 0)
+    {
+        Logger::log_debug("Not Creating Null Hook!");
+        return;
+    }
+    s2 << "Creating Hook | Offset: " << offset << " | Return: " << return_rhd;
+    Logger::log_debug(s2.str());
+    last_rhd = (LPVOID*)offset;
+    if (MH_CreateHook((LPVOID*)(Hooks::GameAssembly + offset), &rhd, (LPVOID*)&rhd_original) == MH_OK)
+    {
+        Logger::log_debug("Hook Created");
+        MH_EnableHook((LPVOID*)(Hooks::GameAssembly + offset));
+    }
 }
 
 std::wstring get_executing_directory()
@@ -396,7 +462,7 @@ float GKImGuiHooker::scale_factor = 1;
 std::string GKImGuiHooker::c_Title = "GirlKisser";
 std::string GKImGuiHooker::c_Build = "v1.3-BETA";
 std::string GKImGuiHooker::c_Message = "Tits <3";
-std::vector<std::string> fonts = native_font_list(true);
+
 
 void GKImGuiHooker::setup_imgui_hwnd(HWND handle, ID3D11Device * device, ID3D11DeviceContext * device_context)
 {
@@ -537,28 +603,30 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
                     if (selected) ImGui::SetItemDefaultFocus();
                 }
 
-                if (ImGui::BeginCombo("Theme", current_theme.c_str()))
-                {
-                    for (std::string::size_type i = 0; i < fonts.size(); i++)
-                    {
-                        const bool selected = current_theme == themes[i];
+                ImGui::EndCombo();
+            }
 
-                        if (ImGui::Selectable(themes[i].c_str(), selected))
-                        {
-                            current_theme = themes[i];
-                            ImGuiIO& io = ImGui::GetIO(); (void)io;
-                            
-                            
-                            // force invalidation and new frames
-                            ImGui_ImplDX11_InvalidateDeviceObjects();
-                            ImGui_ImplDX11_NewFrame();
-                            ImGui_ImplWin32_NewFrame();
-                            ImGui::NewFrame();
-                            Logger::log_info("Changed client theme to " + current_theme);
-                            return;
-                        }
-                        if (selected) ImGui::SetItemDefaultFocus();
+            if (ImGui::BeginCombo("Theme", current_theme.c_str()))
+            {
+                for (std::string::size_type i = 0; i < themes.size(); i++)
+                {
+                    const bool selected = current_theme == themes[i];
+
+                    if (ImGui::Selectable(themes[i].c_str(), selected))
+                    {
+                        if (selected) continue;
+                        current_theme = themes[i];
+
+                        // force invalidation, new frames, and style change
+                        // init_style();
+                        ImGui_ImplDX11_InvalidateDeviceObjects();
+                        ImGui_ImplDX11_NewFrame();
+                        ImGui_ImplWin32_NewFrame();
+                        ImGui::NewFrame();
+                        Logger::log_info("Changed client theme to " + current_theme);
+                        return;
                     }
+                    if (selected) ImGui::SetItemDefaultFocus();
                 }
 
                 ImGui::EndCombo();

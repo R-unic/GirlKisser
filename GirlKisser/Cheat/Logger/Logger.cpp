@@ -1,11 +1,11 @@
 ﻿#include <iostream>
 #include <windows.h>
-
-#include "Logger.h"
-
 #include <chrono>
+#include <fstream>
 #include <sstream>
 #include <thread>
+
+#include "Logger.h"
 
 HANDLE Logger::console;
 
@@ -48,6 +48,11 @@ void Logger::log_client_name()
     std::cout << "[GirlKisser PG3D]";
 }
 
+void write_error_log()
+{
+    std::ofstream("error.log") << std::cout.rdbuf();
+}
+
 void debug(const std::string& msg)
 {
     Logger::log_client_name();
@@ -85,6 +90,7 @@ void err(const std::string& msg)
     std::cout << " [ERR] ";
     SetConsoleTextAttribute(Logger::console, fg_white);
     std::cout << msg << std::endl;
+    write_error_log();
     thread_write_locked = false;
 }
 
@@ -95,6 +101,7 @@ void fatal(const std::string& msg)
     std::cout << " [FATAL] ";
     SetConsoleTextAttribute(Logger::console, fg_white);
     std::cout << msg << std::endl;
+    write_error_log();
     thread_write_locked = false;
 }
 

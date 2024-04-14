@@ -134,5 +134,11 @@
     <ClInclude Include="Cheat\Module\ModuleBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Cheat\Module\Impl\ModuleExtraDisplay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cheat\Module\Impl\ModuleSeasonPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

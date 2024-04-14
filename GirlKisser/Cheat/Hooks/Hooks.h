@@ -8,6 +8,10 @@
 class Hooks
 {
 public:
+    static uintptr_t GameBase;
+    static uintptr_t GameAssembly;
+    static uintptr_t UnityPlayer;
+
     static uint64_t tick;
     static std::list<void*> player_list;
     static void* our_player;

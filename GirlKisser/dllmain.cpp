@@ -147,7 +147,7 @@ LRESULT __stdcall WndProc(const HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
     return DefWindowProcW(GetActiveWindow(), msg, wParam, lParam);
 }
 
-void native_font_list(bool ttf_only)
+void get_native_font_list(bool ttf_only)
 {
     const std::string path = "C:\\Windows\\Fonts";
     for (const auto & entry : std::filesystem::directory_iterator(path))
@@ -237,7 +237,7 @@ int64_t WINAPI MainThread(LPVOID param)
     
     Logger::log_info("Starting injection...");
     
-    native_font_list(true);
+    get_native_font_list(true);
     
     bool init_hook = false;
     while (!init_hook)

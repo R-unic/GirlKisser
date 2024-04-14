@@ -22,9 +22,9 @@ static GKSlider __slow_duration = GKSlider("Slow Duration", 9999, 0, 9999);
 static GKSlider __slow_factor = GKSlider("Slow Factor", 0.001f, 0.001f, 10);
 
 static GKCheckbox __stun = GKCheckbox{ "Stun", false };
-static GKSlider __stun_duration = GKSlider("Slow Duration", 9999, 0, 9999);
-static GKSlider __stun_factor = GKSlider("Slow Factor", 10, 0.001f, 10);
-static GKSlider __stun_radius = GKSlider("Slow Radius", 9999, 0, 9999);
+static GKSlider __stun_duration = GKSlider("Stun Duration", 9999, 0, 9999);
+static GKSlider __stun_factor = GKSlider("Stun Factor", 10, 0.001f, 10);
+static GKSlider __stun_radius = GKSlider("Stun Radius", 9999, 0, 9999);
 
 static GKModule __debuffer = { "Debuffer", COMBAT, 0x0, false, {(GKSetting<>*) &__blind, (GKSetting<>*) &__blind_duration, (GKSetting<>*) &__charm, (GKSetting<>*) &__curse, (GKSetting<>*) &__curse_duration, (GKSetting<>*) &__curse_damage, (GKSetting<>*) &__lightning, (GKSetting<>*) &__poison, (GKSetting<>*) &__poison_amount, (GKSetting<>*) &__slow, (GKSetting<>*) &__slow_duration, (GKSetting<>*) &__slow_factor, (GKSetting<>*) &__stun, (GKSetting<>*) &__stun_duration, (GKSetting<>*) &__stun_factor, (GKSetting<>*) &__stun_radius} };
 
