@@ -28,7 +28,7 @@ static char config_file[32] = "default";
 static ImU32 color_title = ImGui::ColorConvertFloat4ToU32({0.875f, 0.12f, 0.9f, 1.00f});
 static ImU32 color_bg = ImGui::ColorConvertFloat4ToU32({0.00f, 0.00f, 0.00f, 0.75f});
 std::string combo_file = "default";
-std::string current_font = "C:/Windows/Fonts/comic.ttf";
+std::string current_font = "C:/Windows/Fonts/calibril.ttf";
 static bool boundless_value_setting = false;
 
 void InitModules(const std::vector<GKModule>& init_mods);
