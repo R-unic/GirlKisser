@@ -113,6 +113,7 @@ public:
     WPARAM key = 0x0;
     bool enabled = false;
     std::vector<GKSetting<>*> settings = {};
+    bool enabled_by_default = enabled;
     void toggle()
     {
         enabled = !enabled;

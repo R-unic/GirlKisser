@@ -32,6 +32,11 @@ public:
     {
         module->enabled = !module->enabled;
     }
+
+    void set_enabled(bool enabled)
+    {
+        module->enabled = enabled;
+    }
     
     virtual void do_module(void* arg) = 0;
 

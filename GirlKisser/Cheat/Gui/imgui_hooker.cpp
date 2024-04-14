@@ -177,21 +177,20 @@ std::string find_or_default_config(std::list<std::string> lines, std::string sea
 
 void panic()
 {
-    // Read Modules
+    // Turn modules off
     for (const auto& module : GKImGuiHooker::modules)
     {
+        std::stringstream full_setting_name;
+        full_setting_name << "Enabled##" << module->name;
+        module->enabled = module->enabled_by_default;
+
         for (const auto setting : module->settings)
         {
             switch (setting->type)
             {
             case 1:
             {
-                std::stringstream full_setting_name;
-                full_setting_name << "Enabled##" << module->name << 1;
-                Logger::log_debug(setting->name);
-                Logger::log_debug(full_setting_name.str());
-
-                ((GKCheckbox*)setting)->enabled = (setting->name == full_setting_name.str()) ? ((GKCheckbox*)setting)->default_value : false;
+                ((GKCheckbox*)setting)->enabled = ((GKCheckbox*)setting)->default_value;
                 break;
             }
             case 2:
@@ -205,7 +204,6 @@ void panic()
         }
     }
 
-    // Read Other Configs
     Logger::log_info("Panic! Reset all settings to default");
 }
 
