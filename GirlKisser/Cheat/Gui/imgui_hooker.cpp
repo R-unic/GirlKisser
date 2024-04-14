@@ -28,10 +28,10 @@ WPARAM MapLeftRightKeys(const MSG& msg);
 // Girlkisser Central Vars
 std::string BKCImGuiHooker::c_Title = "Girlkisser Central";
 std::string BKCImGuiHooker::c_RealBuild = "v1.0-BETA";
-static std::string c_Build = "Tits <3";
+static std::string c_Message = "Tits <3";
 std::stringstream full_title;
 static char config_file[32] = "default";
-static ImU32 color_title = ImGui::ColorConvertFloat4ToU32({0.91f, 0.64f, 0.13f, 1.00f});
+static ImU32 color_title = ImGui::ColorConvertFloat4ToU32({0.875f, 0.12f, 0.9f, 1.00f});
 static ImU32 color_bg = ImGui::ColorConvertFloat4ToU32({0.00f, 0.00f, 0.00f, 0.85f});
 
 void InitModules(const std::vector<BKCModule>& init_mods);
@@ -56,7 +56,7 @@ ImGuiStyle* style = &ImGui::GetStyle();
     colors[ImGuiCol_FrameBgHovered]         = ImVec4(0.51f, 0.36f, 0.15f, 1.00f);
     colors[ImGuiCol_FrameBgActive]          = ImVec4(0.78f, 0.55f, 0.21f, 1.00f);
     colors[ImGuiCol_TitleBg]                = ImVec4(0.51f, 0.36f, 0.15f, 1.00f);
-    colors[ImGuiCol_TitleBgActive]          = ImVec4(0.91f, 0.64f, 0.13f, 1.00f);
+    colors[ImGuiCol_TitleBgActive]          = ImVec4(0.875f, 0.12f, 0.9f, 1.00f);
     colors[ImGuiCol_TitleBgCollapsed]       = ImVec4(0.00f, 0.00f, 0.00f, 0.51f);
     colors[ImGuiCol_MenuBarBg]              = ImVec4(0.11f, 0.11f, 0.11f, 1.00f);
     colors[ImGuiCol_ScrollbarBg]            = ImVec4(0.06f, 0.06f, 0.06f, 0.53f);
@@ -64,22 +64,22 @@ ImGuiStyle* style = &ImGui::GetStyle();
     colors[ImGuiCol_ScrollbarGrabHovered]   = ImVec4(0.47f, 0.47f, 0.47f, 1.00f);
     colors[ImGuiCol_ScrollbarGrabActive]    = ImVec4(0.81f, 0.83f, 0.81f, 1.00f);
     colors[ImGuiCol_CheckMark]              = ImVec4(0.78f, 0.55f, 0.21f, 1.00f);
-    colors[ImGuiCol_SliderGrab]             = ImVec4(0.91f, 0.64f, 0.13f, 1.00f);
-    colors[ImGuiCol_SliderGrabActive]       = ImVec4(0.91f, 0.64f, 0.13f, 1.00f);
+    colors[ImGuiCol_SliderGrab]             = ImVec4(0.875f, 0.12f, 0.9f, 1.00f);
+    colors[ImGuiCol_SliderGrabActive]       = ImVec4(0.875f, 0.12f, 0.9f, 1.00f);
     colors[ImGuiCol_Button]                 = ImVec4(0.51f, 0.36f, 0.15f, 1.00f);
-    colors[ImGuiCol_ButtonHovered]          = ImVec4(0.91f, 0.64f, 0.13f, 1.00f);
+    colors[ImGuiCol_ButtonHovered]          = ImVec4(0.875f, 0.12f, 0.9f, 1.00f);
     colors[ImGuiCol_ButtonActive]           = ImVec4(0.78f, 0.55f, 0.21f, 1.00f);
     colors[ImGuiCol_Header]                 = ImVec4(0.51f, 0.36f, 0.15f, 1.00f);
-    colors[ImGuiCol_HeaderHovered]          = ImVec4(0.91f, 0.64f, 0.13f, 1.00f);
+    colors[ImGuiCol_HeaderHovered]          = ImVec4(0.875f, 0.12f, 0.9f, 1.00f);
     colors[ImGuiCol_HeaderActive]           = ImVec4(0.93f, 0.65f, 0.14f, 1.00f);
     colors[ImGuiCol_Separator]              = ImVec4(0.21f, 0.21f, 0.21f, 1.00f);
-    colors[ImGuiCol_SeparatorHovered]       = ImVec4(0.91f, 0.64f, 0.13f, 1.00f);
+    colors[ImGuiCol_SeparatorHovered]       = ImVec4(0.875f, 0.12f, 0.9f, 1.00f);
     colors[ImGuiCol_SeparatorActive]        = ImVec4(0.78f, 0.55f, 0.21f, 1.00f);
     colors[ImGuiCol_ResizeGrip]             = ImVec4(0.21f, 0.21f, 0.21f, 1.00f);
-    colors[ImGuiCol_ResizeGripHovered]      = ImVec4(0.91f, 0.64f, 0.13f, 1.00f);
+    colors[ImGuiCol_ResizeGripHovered]      = ImVec4(0.875f, 0.12f, 0.9f, 1.00f);
     colors[ImGuiCol_ResizeGripActive]       = ImVec4(0.78f, 0.55f, 0.21f, 1.00f);
     colors[ImGuiCol_Tab]                    = ImVec4(0.51f, 0.36f, 0.15f, 1.00f);
-    colors[ImGuiCol_TabHovered]             = ImVec4(0.91f, 0.64f, 0.13f, 1.00f);
+    colors[ImGuiCol_TabHovered]             = ImVec4(0.875f, 0.12f, 0.9f, 1.00f);
     colors[ImGuiCol_TabActive]              = ImVec4(0.78f, 0.55f, 0.21f, 1.00f);
     colors[ImGuiCol_TabUnfocused]           = ImVec4(0.07f, 0.10f, 0.15f, 0.97f);
     colors[ImGuiCol_TabUnfocusedActive]     = ImVec4(0.14f, 0.26f, 0.42f, 1.00f);
@@ -377,7 +377,7 @@ void BKCImGuiHooker::setup_imgui_hwnd(HWND handle, ID3D11Device* device, ID3D11D
 {
     imgui_hwnd = handle;
     Logger::log_info("Setting up ImGui instance...");
-    full_title << c_Title << " - Build " << c_Build << " (" << c_RealBuild << ")"; // init the full title
+    full_title << c_Title << " - " << c_Message << " (" << c_RealBuild << ")"; // init the full title
     Logger::log_info("Found current version: " + full_title.str());
     
     IMGUI_CHECKVERSION();
@@ -438,6 +438,7 @@ void BKCImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D1
         HandleCategoryRendering("Movement", MOVEMENT);
         HandleCategoryRendering("Player", PLAYER);
         HandleCategoryRendering("Rewards", REWARDS);
+        HandleCategoryRendering("Meta", META);
         HandleCategoryRendering("Uncategorized", NONE);
 
         // Configs
@@ -458,8 +459,8 @@ void BKCImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D1
             ImGui::Unindent();
         }
 
-        // Meta
-        if (ImGui::CollapsingHeader("Meta"))
+        // Extra
+        if (ImGui::CollapsingHeader("Extra"))
         {
             ImGui::Indent();
             if (ImGui::Button("Panic"))

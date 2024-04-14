@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../ModuleBase.h"
 
-static BKCSlider __speed_amount = BKCSlider("Amount",  1, 0.1f, 20);
+static BKCSlider __speed_amount = BKCSlider("Amount",  1, 0.01f, 100);
 static BKCModule __speed = { "Speed", MOVEMENT, 0x0, false, {(BKCSetting<>*) &__speed_amount} };
 
 class ModuleSpeed : ModuleBase
