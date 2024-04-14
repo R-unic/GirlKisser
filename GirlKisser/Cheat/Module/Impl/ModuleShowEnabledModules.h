@@ -3,7 +3,6 @@
 #include <imgui.h>
 
 #include "../ModuleBase.h"
-#include "../../Hooks/Hooks.h"
 
 static GKModule __array_list = { "Show Enabled Modules", META, 0x0, true, {} };
 

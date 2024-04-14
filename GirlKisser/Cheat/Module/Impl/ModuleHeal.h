@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "../ModuleBase.h"
 #include "../../Internal/Functions.h"
+#include "../../Hooks/Hooks.h"
 
 static GKModule __auto_heal = { "Auto Heal", PLAYER, 0x0, false, {} };
 class ModuleHeal : ModuleBase

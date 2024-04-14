@@ -2,10 +2,10 @@
 
 #include <imgui.h>
 #include <iostream>
+#include <random>
 #include <vector>
 #include <d3d11.h>
 #include <list>
-
 
 // Girlkisser Module Vars
 template<typename T = int>
@@ -127,7 +127,8 @@ public:
     static ImFont* watermark_font;
     static ImFont* arraylist_font;
     static std::string c_Title;
-    static std::string c_RealBuild;
+    static std::string c_Message;
+    static std::string c_Build;
     static float scale_factor;
     static bool modules_loaded;
     static bool config_loaded;

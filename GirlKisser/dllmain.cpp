@@ -231,7 +231,7 @@ int64_t WINAPI MainThread(LPVOID param)
     Logger::log_info("Girls are hot!!!!!!!!!!");
     Logger::log_info("We love titties and ass <3");
     Logger::log_info("");
-    Logger::log_info("Currently using " + GKImGuiHooker::c_Title + " " + GKImGuiHooker::c_RealBuild);
+    Logger::log_info("Currently using " + GKImGuiHooker::c_Title + " " + GKImGuiHooker::c_Build);
     Logger::log_info("Made with love (and several lost braincells) by @hiderikzki & @george2bush (@stanuwu) (modified version by @_runic_)");
     Logger::log_info("");
     

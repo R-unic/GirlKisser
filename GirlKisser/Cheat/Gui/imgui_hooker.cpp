@@ -3,17 +3,13 @@
 #include <imgui_impl_dx11.h>
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #include <d3d11.h>
 #include <vector>
-
-#include "imgui_hooker.h"
-
 #include <algorithm>
 
+#include "imgui_hooker.h"
 #include "../Logger/Logger.h"
-
-#include <fstream>
-
 #include "../Hooks/Hooks.h"
 
 #pragma comment( lib, "d3d11.lib" )
@@ -25,10 +21,6 @@ void CreateRenderTarget();
 void CleanupRenderTarget();
 WPARAM MapLeftRightKeys(const MSG& msg);
 
-// Girlkisser Vars
-std::string GKImGuiHooker::c_Title = "GirlKisser";
-std::string GKImGuiHooker::c_RealBuild = "v1.1-BETA";
-static std::string c_Message = "Tits <3";
 std::stringstream full_title;
 static char config_file[32] = "default";
 static ImU32 color_title = ImGui::ColorConvertFloat4ToU32({0.875f, 0.12f, 0.9f, 1.00f});
@@ -193,8 +185,15 @@ void panic()
             switch (setting->type)
             {
             case 1:
-                ((GKCheckbox*)setting)->enabled = setting->name == "Enabled" ? ((GKCheckbox*)setting)->default_value : false;
+            {
+                std::stringstream full_setting_name;
+                full_setting_name << "Enabled##" << module->name << 1;
+                Logger::log_debug(setting->name);
+                Logger::log_debug(full_setting_name.str());
+
+                ((GKCheckbox*)setting)->enabled = (setting->name == full_setting_name.str()) ? ((GKCheckbox*)setting)->default_value : false;
                 break;
+            }
             case 2:
                 ((GKSlider*)setting)->value = ((GKSlider*)setting)->default_value;
                 break;
@@ -343,7 +342,7 @@ void save_config()
             }
         }
     }
-    
+
     // Write Other Config
 
     std::stringstream msg;
@@ -362,37 +361,34 @@ bool GKImGuiHooker::modules_loaded = false;
 bool GKImGuiHooker::config_loaded = false;
 bool GKImGuiHooker::c_GuiEnabled = false;
 float GKImGuiHooker::scale_factor = 1;
-void GKImGuiHooker::setup_imgui_hwnd(HWND handle, ID3D11Device* device, ID3D11DeviceContext* device_context)
+std::string GKImGuiHooker::c_Title = "GirlKisser";
+std::string GKImGuiHooker::c_Build = "v1.1-BETA";
+std::string GKImGuiHooker::c_Message = "Tits <3";
+
+void GKImGuiHooker::setup_imgui_hwnd(HWND handle, ID3D11Device * device, ID3D11DeviceContext * device_context)
 {
     imgui_hwnd = handle;
     Logger::log_info("Setting up ImGui instance...");
-    full_title << c_Title << " - " << c_Message << " (" << c_RealBuild << ")"; // init the full title
+    full_title << c_Title << " - " << c_Message << " (" << c_Build << ")"; // init the full title
     Logger::log_info("Found current version: " + full_title.str());
-    
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void) io;
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
     io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
-
     // Load Theme
     ImGui::StyleColorsDark();
     embraceTheDarkness();
-    
     ImGui_ImplWin32_Init(imgui_hwnd);
     ImGui_ImplDX11_Init(device, device_context);
-
     int horizontal = 0;
     int vertical = 0;
-    
     GetDesktopResolution(horizontal, vertical);
-
     scale_factor = ((float)horizontal / 1920.0f + (float)vertical / 1080.0f) / 2.0f;
     std::stringstream multi_out;
     multi_out << "Using " << scale_factor << "x scale factor for ImGui fonts";
     Logger::log_info(multi_out.str());
-
     // create font from file (thank god doesn't need to be only loaded from memory, but still can be)
     gui_font = io.Fonts->AddFontFromFileTTF(R"(C:\Windows\Fonts\comic.ttf)", 20.0f * scale_factor);
     watermark_font = io.Fonts->AddFontFromFileTTF(R"(C:\Windows\Fonts\comic.ttf)", 32.0f * scale_factor);
@@ -412,9 +408,7 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
     ImGui_ImplDX11_NewFrame();
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
-    
     ImGui::PushFont(gui_font);
-    
     if (c_GuiEnabled)
     {
         ImGui::Begin(full_title.str().c_str());
@@ -427,7 +421,6 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
         HandleCategoryRendering("Rewards", REWARDS);
         HandleCategoryRendering("Meta", META);
         HandleCategoryRendering("Uncategorized", NONE);
-
         // Configs
         if (ImGui::CollapsingHeader("Config"))
         {
@@ -445,7 +438,6 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
             ImGui::InputText("", config_file, sizeof(config_file));
             ImGui::Unindent();
         }
-
         // Extra
         if (ImGui::CollapsingHeader("Extra"))
         {
@@ -456,9 +448,8 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
             }
             ImGui::Unindent();
         }
-        
-        ImGui::End();
 
+        ImGui::End();
         // ENABLE THIS FOR EASILY FINDING WHAT YOU NEED TO ADD TO THE GUI
         // ImGui::ShowDemoWindow();
     }
@@ -469,19 +460,17 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
     {
         module->run(nullptr);
     }
-
+    
     ImGui::PopFont();
 
     // Watermark
     ImGui::PushFont(watermark_font);
     float size = ImGui::GetFontSize();
     ImVec2 true_size = ImGui::CalcTextSize(full_title.str().c_str());
-    ImGui::GetBackgroundDrawList()->AddRectFilled({5, 5}, {15 + true_size.x, 10 + true_size.y}, color_bg, 10);
-    ImGui::GetBackgroundDrawList()->AddText(nullptr, size, {10, 5}, color_title, full_title.str().c_str());
+    ImGui::GetBackgroundDrawList()->AddRectFilled({ 5, 5 }, { 15 + true_size.x, 10 + true_size.y }, color_bg, 10);
+    ImGui::GetBackgroundDrawList()->AddText(nullptr, size, { 10, 5 }, color_title, full_title.str().c_str());
     ImGui::PopFont();
-    
     ImGui::Render();
-    
     g_pd3dDeviceContext->OMSetRenderTargets(1, &g_mainRenderTargetView, nullptr);
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }

@@ -300,10 +300,10 @@ inline int __stdcall reward_multiplier(void* arg)
 inline bool (__stdcall* double_rewards_original)(void* arg);
 inline bool __stdcall double_rewards(void* arg)
 {
-    if (((ModuleBase*)rewards_multiplier_module)->is_enabled())
-    {
-        return true;
-    }
+    // if (((ModuleBase*)rewards_multiplier_module)->is_enabled())
+    // {
+    //     return true;
+    // }
     
     return double_rewards_original(arg);
 }
