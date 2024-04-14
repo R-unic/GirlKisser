@@ -7,13 +7,13 @@
 
 static GKModule __array_list = { "Show Enabled Modules", META, 0x0, true, {} };
 
-static ImU32 color_array = ImGui::ColorConvertFloat4ToU32({0.875f, 0.12f, 0.9f, 1.00f});
-static ImU32 color_bg = ImGui::ColorConvertFloat4ToU32({0.00f, 0.00f, 0.00f, 0.85f});
+static ImU32 color_array = ImGui::ColorConvertFloat4ToU32({0.875f, 0.12f, 0.9f, 0.85f});
+static ImU32 color_bg = ImGui::ColorConvertFloat4ToU32({0.00f, 0.00f, 0.00f, 0.75f});
 
-class ModuleArrayList : ModuleBase
+class ModuleShowEnabledModules : ModuleBase
 {
 public:
-    ModuleArrayList() : ModuleBase(&__array_list) {}
+    ModuleShowEnabledModules() : ModuleBase(&__array_list) {}
     
     void do_module(void* arg) override
     {

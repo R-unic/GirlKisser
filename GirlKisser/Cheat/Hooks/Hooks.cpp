@@ -362,7 +362,7 @@ void Hooks::load()
     player_move_c_modules.push_back((ModuleBase*) new ModuleAimBot());
     player_move_c_modules.push_back((ModuleBase*) new ModuleInvisibility());
     
-    on_imgui_draw_modules.push_back((ModuleBase*) new ModuleArrayList());
+    on_imgui_draw_modules.push_back((ModuleBase*) new ModuleShowEnabledModules());
 
     weapon_sounds_modules.push_back((ModuleBase*) new ModuleCriticals());
     weapon_sounds_modules.push_back((ModuleBase*) new ModuleReach());
