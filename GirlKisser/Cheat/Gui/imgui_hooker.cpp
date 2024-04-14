@@ -517,7 +517,7 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
     {
         ImGui::Begin(full_title.str().c_str());
 
-        HandleCategoryRendering("General", GENERAL);
+        // HandleCategoryRendering("General", GENERAL);
         HandleCategoryRendering("Combat", COMBAT);
         HandleCategoryRendering("Visual", VISUAL);
         HandleCategoryRendering("Movement", MOVEMENT);
