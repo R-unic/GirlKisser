@@ -31,7 +31,7 @@ public:
         
         for (auto& module : module_list)
         {
-            if (module->enabled) modc++;
+            if (module->enabled && module->name != this->module->name) modc++;
         }
         ImGui::GetBackgroundDrawList()->AddRectFilled({x, y}, {x + 200 * GKImGuiHooker::scale_factor, y + modc * (size + 2) + 10}, color_bg, 10);
         for (auto& module : module_list)
