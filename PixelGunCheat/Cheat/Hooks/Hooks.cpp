@@ -29,7 +29,7 @@
 #include "../Module/Impl/ModuleFOVChanger.h"
 #include "../Module/Impl/ModuleSpeed.h"
 
-#include "../IL2CPPResolver/IL2CPP_Resolver.hpp"
+#include "../../IL2CPPResolver/IL2CPP_Resolver.hpp"
 #include "../Module/Impl/ModuleAimBot.h"
 #include "../Module/Impl/ModuleAntiHeadshot.h"
 #include "../Module/Impl/ModuleArrayList.h"

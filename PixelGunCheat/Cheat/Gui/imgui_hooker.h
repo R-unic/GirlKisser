@@ -6,63 +6,72 @@
 #include <d3d11.h>
 #include <list>
 
-// Boykisser Central Module Vars
+
+// Girlkisser Central Module Vars
+template<typename T = int>
 class BKCSetting
 {
 public:
     int type = 0;
+    T default_value;
     std::string name;
     std::string tooltip;
 };
 
-class BKCCheckbox : public BKCSetting
+class BKCCheckbox : public BKCSetting<bool>
 {
 public:
     BKCCheckbox(const std::string& setting_name, const bool checked, const std::string& extra_info = "")
     {
         name = setting_name;
+        default_value = checked;
         enabled = checked;
         tooltip = extra_info;
         type = 1;
     }
+    bool default_value;
     bool enabled;
 };
 
-class BKCSlider : public BKCSetting
+class BKCSlider : public BKCSetting<float>
 {
 public:
     BKCSlider(const std::string& setting_name, const float val, const float min, const float max, const std::string& extra_info = "")
     {
         name = setting_name;
+        default_value = val;
         value = val;
         minimum = min;
         maximum = max;
         tooltip = extra_info;
         type = 2;
     }
+    float default_value;
     float value;
     float minimum;
     float maximum;
 };
 
-class BKCSliderInt : public BKCSetting
+class BKCSliderInt : public BKCSetting<int>
 {
 public:
     BKCSliderInt(const std::string& setting_name, const int val, const int min, const int max, const std::string& extra_info = "")
     {
         name = setting_name;
+        default_value = val;
         value = val;
         minimum = min;
         maximum = max;
         tooltip = extra_info;
         type = 3;
     }
+    int default_value;
     int value;
     int minimum;
     int maximum;
 };
 
-class BKCDropdown : public BKCSetting
+class BKCDropdown : public BKCSetting<>
 {
 public:
     BKCDropdown(const std::string& setting_name, const std::string& def_val, const std::vector<std::string>& vals, const std::string& extra_info = "")
@@ -92,7 +101,7 @@ enum BKCCategory
     VISUAL = 3,
     MOVEMENT = 4,
     PLAYER = 5,
-    EXPLOIT = 6
+    REWARDS = 6
 };
 
 class BKCModule
@@ -102,7 +111,7 @@ public:
     BKCCategory category = NONE;
     WPARAM key = 0x0;
     bool enabled = false;
-    std::vector<BKCSetting*> settings = {};
+    std::vector<BKCSetting<>*> settings = {};
     void toggle()
     {
         enabled = !enabled;

@@ -26,7 +26,7 @@ static BKCSlider __stun_duration = BKCSlider("Slow Duration", 9999, 0, 9999);
 static BKCSlider __stun_factor = BKCSlider("Slow Factor", 10, 0.001f, 10);
 static BKCSlider __stun_radius = BKCSlider("Slow Radius", 9999, 0, 9999);
 
-static BKCModule __debuffer = { "Debuffer", COMBAT, 0x0, true, {&__blind, &__blind_duration, &__charm, &__curse, &__curse_duration, &__curse_damage, &__lightning, &__poison, &__poison_amount, &__slow, &__slow_duration, &__slow_factor, &__stun, &__stun_duration, &__stun_factor, &__stun_radius} };
+static BKCModule __debuffer = { "Debuffer", COMBAT, 0x0, true, {(BKCSetting<>*) &__blind, (BKCSetting<>*) &__blind_duration, (BKCSetting<>*) &__charm, (BKCSetting<>*) &__curse, (BKCSetting<>*) &__curse_duration, (BKCSetting<>*) &__curse_damage, (BKCSetting<>*) &__lightning, (BKCSetting<>*) &__poison, (BKCSetting<>*) &__poison_amount, (BKCSetting<>*) &__slow, (BKCSetting<>*) &__slow_duration, (BKCSetting<>*) &__slow_factor, (BKCSetting<>*) &__stun, (BKCSetting<>*) &__stun_duration, (BKCSetting<>*) &__stun_factor, (BKCSetting<>*) &__stun_radius} };
 
 class ModuleDebuffer : ModuleBase
 {

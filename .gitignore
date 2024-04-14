@@ -6,3 +6,5 @@ riderModule.iml
 .idea
 Debug
 x64
+x32
+.vs

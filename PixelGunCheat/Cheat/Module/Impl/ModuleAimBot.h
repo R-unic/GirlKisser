@@ -2,7 +2,7 @@
 #include <imgui.h>
 #include <map>
 
-#include "../IL2CPPResolver/IL2CPP_Resolver.hpp"
+#include "../../IL2CPPResolver/IL2CPP_Resolver.hpp"
 
 #include "../ModuleBase.h"
 #include "../../Hooks/Hooks.h"
@@ -10,7 +10,7 @@
 
 static BKCCheckbox __aim_bot_through_walls = BKCCheckbox("Through Walls", false);
 static BKCCheckbox __aim_bot_body_shot = BKCCheckbox("Body Shot", false);
-static BKCModule __aim_bot = { "Aim Bot", COMBAT, 0x0, true, {&__aim_bot_through_walls, &__aim_bot_body_shot} };
+static BKCModule __aim_bot = { "Aim Bot", COMBAT, 0x0, true, {(BKCSetting<>*) &__aim_bot_through_walls, (BKCSetting<>*) &__aim_bot_body_shot} };
 
 static std::map<std::string, Unity::Vector3> player_pos_cache;
 static RECT window_size;

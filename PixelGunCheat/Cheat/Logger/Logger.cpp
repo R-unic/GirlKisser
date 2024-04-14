@@ -45,7 +45,7 @@ void Logger::log_client_name()
     }
     thread_write_locked = true;
     SetConsoleTextAttribute(console, fg_l_purple);
-    std::cout << "[Boykisser Central]";
+    std::cout << "[GirlKisser Central <3]";
 }
 
 void debug(const std::string& msg)

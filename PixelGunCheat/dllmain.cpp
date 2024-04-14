@@ -22,50 +22,6 @@ ID3D11Device* pDevice = NULL;
 ID3D11DeviceContext* pContext = NULL;
 ID3D11RenderTargetView* mainRenderTargetView;
 
-std::vector<std::string> watermark = {
-    "       +=                                                           ..     ",
-    "      :%+%%-                                                     .*@+.*@=  ",
-    "     .@+   -%#.                      .                        .*%+.    -%- ",
-    "     +#      :#%.                   *#@%.                   -%%.        *# ",
-    "    =%         .#%-                 *# .#%=.              -%+           :@:",
-    "    @+            #%=     ..:++*++-..@-   -%*           -@+              %:",
-    "   :%.             .#%#%#=:..     ..=#@-    *#        .#*                *=",
-    "   +*                 *%:                    :%-     %#.                 +=",
-    "  .%.                   *%.                   .#*  #@:                   +=",
-    "  -#                     .+:                    *@=%                     +=",
-    "  #=                                             =%                      +=",
-    " .%                                                                      %-",
-    " .%                                                                     :@:",
-    " .%                                                                     #+ ",
-    " .%                                                                    -@. ",
-    " .%                                                                    #+  ",
-    "  #=         .                                    ......              =%   ",
-    "  -#        *@@@@@%*-.                       -%@@@@@@@@@%=           .@-   ",
-    "   *=            .+*@@@@%#=              :*@@@@%#+++:....           .%=    ",
-    "   :@-                 :%@@@:            =@@@@#=..                 :%: ",
-    "    :@=            :+%@@@%:       ..       .+%@@@@@@%*=:         .+@@%@%%%:",
-    "      *@=     :+@@@@@@*-      =@@@@@@           .+%@@@@@@%.    ##=      =%.",
-    "+#+%%####=    .#*=:.                                ..=#:.            -%=  ",
-    "=%                                                   :+*+*-  -*-   -%@-    ",
-    " ##.       ..                    :+.       +-        .. :*=+*-     %#.     ",
-    "  =@-  .+*+-+.:+*=       .    .+%*:#%+:.  -@=           -+-.        *#     ",
-    "    +%*    .***:         %#-=%#.      .-%*-                          %=    ",
-    "    .%+                     .**         =%                           :%:   ",
-    "   .%+                       .@:        *=                            %:   ",
-    "   *+                         =%        *=                  .#%+*%%%%%#:   ",
-    "  :%.         +.               *#       %:                :%@-             ",
-    "  *#-+%@#-+@+:%@%-              +%     :%.            :+%@*                ",
-    "  -*:        =*%-.+#%#.          :@+ .=%-        *%%*=:                    ",
-    "               :@:   .=%=.         :::.          =@=                       ",
-    "                :@=                                ##.                     ",
-    "                  #%                                :@=                    ",
-    "               .##-                                  .%*                   ",
-    "              -%:                                      #*                  ",
-    "             **                                         #=                 ",
-    "            .@*=-...                                     %=                ",
-    "                ::::==+.                                 .%:               ",
-};
-
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // Data
@@ -266,32 +222,17 @@ int64_t WINAPI MainThread(LPVOID param)
     AllocConsole();
     FILE* fp;
     freopen_s(&fp, "CONOUT$", "w", stdout);
-    SetConsoleTitleW(L"BoyKisser Central");
+    SetConsoleTitleW(L"GirlKisser PG3D");
     const HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     Logger::console = console;
     SetConsoleTextAttribute(console, 0x000F);
     // ShowWindow(GetConsoleWindow(), SW_MINIMIZE);
-
-    /*
-    Logger::log_debug("--- LOGGER TEST ---");
     
-    Logger::log_debug("This is a debug log!");
-    Logger::log_info("This is an info log!");
-    Logger::log_warn("This is a warning log!");
-    Logger::log_err("This is an error log!");
-    Logger::log_fatal("This is a FATAL log!");
-    
-    Logger::log_debug("--- LOGGER TEST ---");
-    */
-
-    for (const auto& line : watermark)
-        Logger::log_info(line);
-    
-    Logger::log_info("");
-    Logger::log_info("You like kissing boys don't you~~ ;3");
+    Logger::log_info("Girls are hot!!!!!!!!!!");
+    Logger::log_info("We love titties and ass <3");
     Logger::log_info("");
     Logger::log_info("Currently using " + BKCImGuiHooker::c_Title + " " + BKCImGuiHooker::c_RealBuild);
-    Logger::log_info("Made with love (and several lost braincells) by @hiderikzki & @george2bush (@stanuwu)");
+    Logger::log_info("Made with love (and several lost braincells) by @hiderikzki & @george2bush (@stanuwu) (modified version by @_runic_)");
     Logger::log_info("");
     
     Logger::log_info("Starting injection...");

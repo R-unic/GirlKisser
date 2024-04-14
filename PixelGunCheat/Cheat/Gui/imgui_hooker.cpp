@@ -25,10 +25,10 @@ void CreateRenderTarget();
 void CleanupRenderTarget();
 WPARAM MapLeftRightKeys(const MSG& msg);
 
-// Boykisser Central Vars
-std::string BKCImGuiHooker::c_Title = "Boykisser Central";
+// Girlkisser Central Vars
+std::string BKCImGuiHooker::c_Title = "Girlkisser Central";
 std::string BKCImGuiHooker::c_RealBuild = "v1.0-BETA";
-static std::string c_Build = ":3";
+static std::string c_Build = "Tits <3";
 std::stringstream full_title;
 static char config_file[32] = "default";
 static ImU32 color_title = ImGui::ColorConvertFloat4ToU32({0.91f, 0.64f, 0.13f, 1.00f});
@@ -181,6 +181,44 @@ std::string find_or_default_config(std::list<std::string> lines, std::string sea
         }
     }
     return "not_found";
+}
+
+void panic()
+{
+    // Read Modules
+    for (const auto& module : BKCImGuiHooker::modules)
+    {
+        const std::string NOT_FOUND = "not_found";
+        std::string found = NOT_FOUND;
+        std::stringstream pe;
+        pe << module->name << ";" << "enabled" << ";";
+        bool enabled;
+
+        for (const auto setting : module->settings)
+        {
+            std::stringstream data;
+            bool cbv;
+            float slv;
+            int islv;
+            int dtv;
+            switch (setting->type)
+            {
+            case 1:
+                ((BKCCheckbox*)setting)->enabled = ((BKCCheckbox*)setting)->default_value;
+                break;
+            case 2:
+                ((BKCSlider*)setting)->value = ((BKCSlider*)setting)->default_value;
+                break;
+            case 3:
+                ((BKCSliderInt*)setting)->value = ((BKCSliderInt*)setting)->default_value;
+                break;
+            default: break;
+            }
+        }
+    }
+
+    // Read Other Configs
+    Logger::log_info("Panic! Reset all settings to default");
 }
 
 void load_config()
@@ -399,7 +437,7 @@ void BKCImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D1
         HandleCategoryRendering("Visual", VISUAL);
         HandleCategoryRendering("Movement", MOVEMENT);
         HandleCategoryRendering("Player", PLAYER);
-        HandleCategoryRendering("Exploit", EXPLOIT);
+        HandleCategoryRendering("Rewards", REWARDS);
         HandleCategoryRendering("Uncategorized", NONE);
 
         // Configs
@@ -419,6 +457,17 @@ void BKCImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D1
             ImGui::InputText("", config_file, sizeof(config_file));
             ImGui::Unindent();
         }
+
+        // Meta
+        if (ImGui::CollapsingHeader("Meta"))
+        {
+            ImGui::Indent();
+            if (ImGui::Button("Panic"))
+            {
+                panic();
+            }
+            ImGui::Unindent();
+        }
         
         ImGui::End();
 
@@ -428,7 +477,6 @@ void BKCImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D1
 
     // Modules
     Hooks::draw_all();
-    
     for (auto module : Hooks::on_imgui_draw_modules)
     {
         module->run(nullptr);
