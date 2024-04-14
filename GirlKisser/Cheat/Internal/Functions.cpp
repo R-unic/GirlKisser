@@ -24,6 +24,14 @@ void Functions::SetNextHitCritical(void* arg, bool arg1)
     return fn(arg, arg1);
 }
 
+// WeaponSounds
+void Functions::SetNextHitCritical(void* arg, bool arg1)
+{
+    if (!arg) return;
+    static const auto fn = (void(*)(void*, bool)) (GameAssembly_ + 0x7E91C0);
+    return fn(arg, arg1);
+}
+
 // Player_move_c
 void Functions::MakeInvisibleForSeconds(void* arg, float duration)
 {
