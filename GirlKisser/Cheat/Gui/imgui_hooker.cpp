@@ -25,19 +25,19 @@ void CreateRenderTarget();
 void CleanupRenderTarget();
 WPARAM MapLeftRightKeys(const MSG& msg);
 
-// Girlkisser Central Vars
-std::string BKCImGuiHooker::c_Title = "Girlkisser Central";
-std::string BKCImGuiHooker::c_RealBuild = "v1.0-BETA";
+// Girlkisser Vars
+std::string GKImGuiHooker::c_Title = "GirlKisser";
+std::string GKImGuiHooker::c_RealBuild = "v1.1-BETA";
 static std::string c_Message = "Tits <3";
 std::stringstream full_title;
 static char config_file[32] = "default";
 static ImU32 color_title = ImGui::ColorConvertFloat4ToU32({0.875f, 0.12f, 0.9f, 1.00f});
 static ImU32 color_bg = ImGui::ColorConvertFloat4ToU32({0.00f, 0.00f, 0.00f, 0.85f});
 
-void InitModules(const std::vector<BKCModule>& init_mods);
-void HandleModuleSettingRendering(BKCModule& module);
-void HandleModuleRendering(BKCModule& module);
-void HandleCategoryRendering(const std::string& name, BKCCategory cat);
+void InitModules(const std::vector<GKModule>& init_mods);
+void HandleModuleSettingRendering(GKModule& module);
+void HandleModuleRendering(GKModule& module);
+void HandleCategoryRendering(const std::string& name, GKCategory cat);
 
 // https://github.com/ocornut/imgui/issues/707
 void embraceTheDarkness()
@@ -159,11 +159,11 @@ std::wstring get_executing_directory()
 
 std::string sanity_config(const std::wstring* dir)
 {
-    const std::wstring config_dir = *dir + L"/bkc_config";
+    const std::wstring config_dir = *dir + L"/GK_config";
     CreateDirectory(config_dir.c_str(), nullptr);
     const std::string config_string_temp(config_file);
     const std::wstring config_string(config_string_temp.begin(), config_string_temp.end());
-    const std::wstring path_temp = config_dir + L"/" + config_string + L".bkc";
+    const std::wstring path_temp = config_dir + L"/" + config_string + L".GK";
     std::string path(path_temp.begin(), path_temp.end());
     FILE* file;
     fopen_s(&file, path.c_str(), "a+");
@@ -186,31 +186,20 @@ std::string find_or_default_config(std::list<std::string> lines, std::string sea
 void panic()
 {
     // Read Modules
-    for (const auto& module : BKCImGuiHooker::modules)
+    for (const auto& module : GKImGuiHooker::modules)
     {
-        const std::string NOT_FOUND = "not_found";
-        std::string found = NOT_FOUND;
-        std::stringstream pe;
-        pe << module->name << ";" << "enabled" << ";";
-        bool enabled;
-
         for (const auto setting : module->settings)
         {
-            std::stringstream data;
-            bool cbv;
-            float slv;
-            int islv;
-            int dtv;
             switch (setting->type)
             {
             case 1:
-                ((BKCCheckbox*)setting)->enabled = ((BKCCheckbox*)setting)->default_value;
+                ((GKCheckbox*)setting)->enabled = setting->name == "Enabled" ? ((GKCheckbox*)setting)->default_value : false;
                 break;
             case 2:
-                ((BKCSlider*)setting)->value = ((BKCSlider*)setting)->default_value;
+                ((GKSlider*)setting)->value = ((GKSlider*)setting)->default_value;
                 break;
             case 3:
-                ((BKCSliderInt*)setting)->value = ((BKCSliderInt*)setting)->default_value;
+                ((GKSliderInt*)setting)->value = ((GKSliderInt*)setting)->default_value;
                 break;
             default: break;
             }
@@ -240,7 +229,7 @@ void load_config()
     }
     
     // Read Modules
-    for (const auto& module : BKCImGuiHooker::modules)
+    for (const auto& module : GKImGuiHooker::modules)
     {
         std::string found;
         const std::string NOT_FOUND = "not_found";
@@ -278,7 +267,7 @@ void load_config()
                 if (found != NOT_FOUND)
                 {
                     std::istringstream(found) >> cbv;
-                    ((BKCCheckbox*)setting)->enabled = cbv;
+                    ((GKCheckbox*)setting)->enabled = cbv;
                 }
                 break;
             case 2:
@@ -287,7 +276,7 @@ void load_config()
                 if (found != NOT_FOUND)
                 {
                     slv = std::stof(found);
-                    ((BKCSlider*)setting)->value = slv;
+                    ((GKSlider*)setting)->value = slv;
                 }
                 break;
             case 3:
@@ -296,7 +285,7 @@ void load_config()
                 if (found != NOT_FOUND)
                 {
                     islv = std::stoi(found);
-                    ((BKCSliderInt*)setting)->value = islv;
+                    ((GKSliderInt*)setting)->value = islv;
                 }
                 break;
             case 4:
@@ -305,8 +294,8 @@ void load_config()
                 if (found != NOT_FOUND)
                 {
                     dtv = std::stoi(found);
-                    ((BKCDropdown*)setting)->current_index = dtv;
-                    ((BKCDropdown*)setting)->current_value = ((BKCDropdown*)setting)->values[dtv];
+                    ((GKDropdown*)setting)->current_index = dtv;
+                    ((GKDropdown*)setting)->current_value = ((GKDropdown*)setting)->values[dtv];
                 }
                 break;
             default: break;
@@ -330,7 +319,7 @@ void save_config()
     std::ofstream out(file);
 
     // Write Modules
-    for (const auto& module : BKCImGuiHooker::modules)
+    for (const auto& module : GKImGuiHooker::modules)
     {
         out << module->name << ";" << "enabled" << ";" << module->enabled << std::endl;
         out << module->name << ";" << "key" << ";" << module->key << std::endl;
@@ -339,16 +328,16 @@ void save_config()
             switch (setting->type)
             {
             case 1:
-                out << module->name << ";" << setting->name << ";" << "checkbox" << ";" << ((BKCCheckbox*)setting)->enabled << std::endl;
+                out << module->name << ";" << setting->name << ";" << "checkbox" << ";" << ((GKCheckbox*)setting)->enabled << std::endl;
                 break;
             case 2:
-                out << module->name << ";" << setting->name << ";" << "slider" << ";" << ((BKCSlider*)setting)->value << std::endl;
+                out << module->name << ";" << setting->name << ";" << "slider" << ";" << ((GKSlider*)setting)->value << std::endl;
                 break;
             case 3:
-                out << module->name << ";" << setting->name << ";" << "int_slider" << ";" << ((BKCSliderInt*)setting)->value << std::endl;
+                out << module->name << ";" << setting->name << ";" << "int_slider" << ";" << ((GKSliderInt*)setting)->value << std::endl;
                 break;
             case 4:
-                out << module->name << ";" << setting->name << ";" << "dropdown" << ";" << ((BKCDropdown*)setting)->indexof(((BKCDropdown*)setting)->current_value) << std::endl;
+                out << module->name << ";" << setting->name << ";" << "dropdown" << ";" << ((GKDropdown*)setting)->indexof(((GKDropdown*)setting)->current_value) << std::endl;
                 break;
             default: break;
             }
@@ -365,15 +354,15 @@ void save_config()
 }
 
 HWND imgui_hwnd;
-std::list<BKCModule*> BKCImGuiHooker::modules = {};
-ImFont* BKCImGuiHooker::gui_font = nullptr;
-ImFont* BKCImGuiHooker::watermark_font = nullptr;
-ImFont* BKCImGuiHooker::arraylist_font = nullptr;
-bool BKCImGuiHooker::modules_loaded = false;
-bool BKCImGuiHooker::config_loaded = false;
-bool BKCImGuiHooker::c_GuiEnabled = false;
-float BKCImGuiHooker::scale_factor = 1;
-void BKCImGuiHooker::setup_imgui_hwnd(HWND handle, ID3D11Device* device, ID3D11DeviceContext* device_context)
+std::list<GKModule*> GKImGuiHooker::modules = {};
+ImFont* GKImGuiHooker::gui_font = nullptr;
+ImFont* GKImGuiHooker::watermark_font = nullptr;
+ImFont* GKImGuiHooker::arraylist_font = nullptr;
+bool GKImGuiHooker::modules_loaded = false;
+bool GKImGuiHooker::config_loaded = false;
+bool GKImGuiHooker::c_GuiEnabled = false;
+float GKImGuiHooker::scale_factor = 1;
+void GKImGuiHooker::setup_imgui_hwnd(HWND handle, ID3D11Device* device, ID3D11DeviceContext* device_context)
 {
     imgui_hwnd = handle;
     Logger::log_info("Setting up ImGui instance...");
@@ -410,14 +399,12 @@ void BKCImGuiHooker::setup_imgui_hwnd(HWND handle, ID3D11Device* device, ID3D11D
     arraylist_font = io.Fonts->AddFontFromFileTTF(R"(C:\Windows\Fonts\comic.ttf)", 24.0f * scale_factor);
 }
 
-void BKCImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11DeviceContext* g_pd3dDeviceContext)
+void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11DeviceContext* g_pd3dDeviceContext)
 {
     // Load Config
     if (modules_loaded && !config_loaded)
     {
         config_loaded = true;
-        load_config();
-        save_config();
         Logger::log_info("Loaded default config!");
     }
     
@@ -499,7 +486,7 @@ void BKCImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D1
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }
 
-void HandleModuleSettingRendering(BKCModule& module)
+void HandleModuleSettingRendering(GKModule& module)
 {
     for (auto& setting : module.settings)
     { 
@@ -507,27 +494,27 @@ void HandleModuleSettingRendering(BKCModule& module)
         
         if (setting->type == 1)
         {
-            auto* checkbox = (BKCCheckbox*)setting;
+            auto* checkbox = (GKCheckbox*)setting;
             per_module_name << setting->name << "##" << module.name << setting->type;
             ImGui::Checkbox(per_module_name.str().c_str(), &checkbox->enabled);
         }
         else if (setting->type == 2)
         {
-            auto* slider = (BKCSlider*)setting;
+            auto* slider = (GKSlider*)setting;
             per_module_name << setting->name << "##" << module.name << setting->type;
             ImGui::SliderFloat(per_module_name.str().c_str(), &slider->value, slider->minimum, slider->maximum);
             slider->value = std::ranges::clamp(slider->value, slider->minimum, slider->maximum);
         }
         else if (setting->type == 3)
         {
-            auto* slider = (BKCSliderInt*)setting;
+            auto* slider = (GKSliderInt*)setting;
             per_module_name << setting->name << "##" << module.name << setting->type;
             ImGui::SliderInt(per_module_name.str().c_str(), &slider->value, slider->minimum, slider->maximum);
             slider->value = std::ranges::clamp(slider->value, slider->minimum, slider->maximum);
         }
         else if (setting->type == 4)
         {
-            auto* dropdown = (BKCDropdown*)setting;
+            auto* dropdown = (GKDropdown*)setting;
             per_module_name << setting->name << "##" << module.name << setting->type;
             if (ImGui::BeginCombo(per_module_name.str().c_str(), dropdown->current_value.c_str()))
             {
@@ -557,7 +544,7 @@ void HandleModuleSettingRendering(BKCModule& module)
     }
 }
 
-void HandleModuleRendering(BKCModule& module)
+void HandleModuleRendering(GKModule& module)
 {
     ImGui::Indent();
     if (ImGui::CollapsingHeader(module.name.c_str()))
@@ -575,11 +562,11 @@ void HandleModuleRendering(BKCModule& module)
 }
 
 
-void HandleCategoryRendering(const std::string& name, const BKCCategory cat)
+void HandleCategoryRendering(const std::string& name, const GKCategory cat)
 {
     if (ImGui::CollapsingHeader(name.c_str()))
     {
-        for (auto& module : BKCImGuiHooker::modules)
+        for (auto& module : GKImGuiHooker::modules)
         {
             if (module->category != cat) continue;
             HandleModuleRendering(*module);

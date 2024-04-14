@@ -8,11 +8,11 @@
 
 #include "../../IL2CPPResolver/IL2CPP_Resolver.hpp"
 
-static BKCDropdown __esp_style = BKCDropdown("ESP Style", "Simple", { "Simple", "CS-like" });
-static BKCSliderInt __esp_thickness = BKCSliderInt("Border Thickness", 2, 1, 5);
-static BKCSliderInt __esp_corner_rounding = BKCSliderInt("Corner Rounding", 0, -10, 10);
-static BKCCheckbox __esp_teammates = BKCCheckbox("Teammates",  true);
-static BKCModule __esp = { "ESP", VISUAL, 0x0, false, { (BKCSetting<>*) & __esp_style, (BKCSetting<>*) & __esp_thickness, (BKCSetting<>*) & __esp_corner_rounding, (BKCSetting<>*) & __esp_teammates} };
+static GKDropdown __esp_style = GKDropdown("ESP Style", "Simple", { "Simple", "CS-like" });
+static GKSliderInt __esp_thickness = GKSliderInt("Border Thickness", 2, 1, 5);
+static GKSliderInt __esp_corner_rounding = GKSliderInt("Corner Rounding", 0, -10, 10);
+static GKCheckbox __esp_teammates = GKCheckbox("Teammates", false);
+static GKModule __esp = { "ESP", VISUAL, 0x0, false, { (GKSetting<>*) & __esp_style, (GKSetting<>*) & __esp_thickness, (GKSetting<>*) & __esp_corner_rounding, (GKSetting<>*) & __esp_teammates} };
 
 static ImU32 color_enemy = ImGui::ColorConvertFloat4ToU32({1.00f, 0.00f, 0.00f, 1.00f});
 static ImU32 color_ally = ImGui::ColorConvertFloat4ToU32({0.33f, 0.33f, 0.33f, 1.00f});

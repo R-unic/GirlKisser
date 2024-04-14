@@ -7,9 +7,9 @@
 #include <list>
 
 
-// Girlkisser Central Module Vars
+// Girlkisser Module Vars
 template<typename T = int>
-class BKCSetting
+class GKSetting
 {
 public:
     int type = 0;
@@ -18,10 +18,10 @@ public:
     std::string tooltip;
 };
 
-class BKCCheckbox : public BKCSetting<bool>
+class GKCheckbox : public GKSetting<bool>
 {
 public:
-    BKCCheckbox(const std::string& setting_name, const bool checked, const std::string& extra_info = "")
+    GKCheckbox(const std::string& setting_name, const bool checked, const std::string& extra_info = "")
     {
         name = setting_name;
         default_value = checked;
@@ -33,10 +33,10 @@ public:
     bool enabled;
 };
 
-class BKCSlider : public BKCSetting<float>
+class GKSlider : public GKSetting<float>
 {
 public:
-    BKCSlider(const std::string& setting_name, const float val, const float min, const float max, const std::string& extra_info = "")
+    GKSlider(const std::string& setting_name, const float val, const float min, const float max, const std::string& extra_info = "")
     {
         name = setting_name;
         default_value = val;
@@ -52,10 +52,10 @@ public:
     float maximum;
 };
 
-class BKCSliderInt : public BKCSetting<int>
+class GKSliderInt : public GKSetting<int>
 {
 public:
-    BKCSliderInt(const std::string& setting_name, const int val, const int min, const int max, const std::string& extra_info = "")
+    GKSliderInt(const std::string& setting_name, const int val, const int min, const int max, const std::string& extra_info = "")
     {
         name = setting_name;
         default_value = val;
@@ -71,10 +71,10 @@ public:
     int maximum;
 };
 
-class BKCDropdown : public BKCSetting<>
+class GKDropdown : public GKSetting<>
 {
 public:
-    BKCDropdown(const std::string& setting_name, const std::string& def_val, const std::vector<std::string>& vals, const std::string& extra_info = "")
+    GKDropdown(const std::string& setting_name, const std::string& def_val, const std::vector<std::string>& vals, const std::string& extra_info = "")
     {
         name = setting_name;
         values = vals;
@@ -93,7 +93,7 @@ public:
     std::vector<std::string> values;
 };
 
-enum BKCCategory
+enum GKCategory
 {
     NONE = 0,
     GENERAL = 1,
@@ -105,24 +105,24 @@ enum BKCCategory
     META = 7
 };
 
-class BKCModule
+class GKModule
 {
 public:
     std::string name;
-    BKCCategory category = NONE;
+    GKCategory category = NONE;
     WPARAM key = 0x0;
     bool enabled = false;
-    std::vector<BKCSetting<>*> settings = {};
+    std::vector<GKSetting<>*> settings = {};
     void toggle()
     {
         enabled = !enabled;
     }
 };
 
-class BKCImGuiHooker
+class GKImGuiHooker
 {
 public:
-    static std::list<BKCModule*> modules;
+    static std::list<GKModule*> modules;
     static ImFont* gui_font;
     static ImFont* watermark_font;
     static ImFont* arraylist_font;

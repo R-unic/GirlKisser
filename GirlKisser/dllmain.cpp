@@ -112,10 +112,10 @@ LRESULT __stdcall WndProc(const HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
             io.MouseDown[2] = false;
         break;
     case WM_KEYDOWN:
-        if (MapLeftRightKeys(wParam, lParam) == VK_RSHIFT || isWindowVisible && BKCImGuiHooker::c_GuiEnabled && wParam == VK_ESCAPE) { // allow escape key usage when menu is open (i am too used to mc functionality smh)
+        if (MapLeftRightKeys(wParam, lParam) == VK_RSHIFT || isWindowVisible && GKImGuiHooker::c_GuiEnabled && wParam == VK_ESCAPE) { // allow escape key usage when menu is open (i am too used to mc functionality smh)
             ShowMouseCursor(!isWindowVisible);
             isWindowVisible = !isWindowVisible;
-            BKCImGuiHooker::c_GuiEnabled = !BKCImGuiHooker::c_GuiEnabled;
+            GKImGuiHooker::c_GuiEnabled = !GKImGuiHooker::c_GuiEnabled;
         }
         break;
     case WM_SIZE:
@@ -182,7 +182,7 @@ long __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Fla
             Logger::log_info("Kiero D3D11 hkPresent hooked successfully!");
             // Init Imgui
 
-            BKCImGuiHooker::setup_imgui_hwnd(window, pDevice, pContext);
+            GKImGuiHooker::setup_imgui_hwnd(window, pDevice, pContext);
             
             is_init = false;
 
@@ -190,7 +190,7 @@ long __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Fla
         }
     }
 
-    BKCImGuiHooker::start(mainRenderTargetView, pContext);
+    GKImGuiHooker::start(mainRenderTargetView, pContext);
     
     return oPresent(pSwapChain, SyncInterval, Flags);
 }
@@ -231,7 +231,7 @@ int64_t WINAPI MainThread(LPVOID param)
     Logger::log_info("Girls are hot!!!!!!!!!!");
     Logger::log_info("We love titties and ass <3");
     Logger::log_info("");
-    Logger::log_info("Currently using " + BKCImGuiHooker::c_Title + " " + BKCImGuiHooker::c_RealBuild);
+    Logger::log_info("Currently using " + GKImGuiHooker::c_Title + " " + GKImGuiHooker::c_RealBuild);
     Logger::log_info("Made with love (and several lost braincells) by @hiderikzki & @george2bush (@stanuwu) (modified version by @_runic_)");
     Logger::log_info("");
     

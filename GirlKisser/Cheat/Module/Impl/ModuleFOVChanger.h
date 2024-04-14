@@ -4,8 +4,8 @@
 
 #include "../../IL2CPPResolver/IL2CPP_Resolver.hpp"
 
-static BKCSlider __fov_changer_fov = BKCSlider("FOV", 90, 30, 300, "FOV values too large will cause game to warp!");
-static BKCModule __fov_changer = { "FOV Changer", VISUAL, 0x0, false, {(BKCSetting<>*) &__fov_changer_fov} };
+static GKSlider __fov_changer_fov = GKSlider("FOV", 90, 30, 300, "FOV values too large will cause game to warp!");
+static GKModule __fov_changer = { "FOV Changer", VISUAL, 0x0, false, {(GKSetting<>*) &__fov_changer_fov} };
 
 class ModuleFOVChanger : ModuleBase
 {

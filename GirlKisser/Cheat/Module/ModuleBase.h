@@ -5,17 +5,17 @@
 class ModuleBase
 {
 public:
-    ModuleBase(BKCModule* m)
+    ModuleBase(GKModule* m)
     {
         key = m->key;
         name = m->name;
         module = m;
-        BKCImGuiHooker::modules.push_back(m);
+        GKImGuiHooker::modules.push_back(m);
     }
     
     WPARAM key = 0x00;
     std::string name;
-    BKCModule* module;
+    GKModule* module;
     
     void run(void* arg)
     {

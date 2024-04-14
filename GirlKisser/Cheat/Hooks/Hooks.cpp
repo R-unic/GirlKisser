@@ -32,7 +32,7 @@
 #include "../../IL2CPPResolver/IL2CPP_Resolver.hpp"
 #include "../Module/Impl/ModuleAimBot.h"
 #include "../Module/Impl/ModuleAntiHeadshot.h"
-#include "../Module/Impl/ModuleArrayList.h"
+#include "../Module/Impl/ModuleShowEnabledModules.h"
 #include "../Module/Impl/ModuleDoubleJump.h"
 #include "../Module/Impl/ModuleESP.h"
 #include "../Module/Impl/ModuleHeadshotMultiplier.h"
@@ -388,7 +388,7 @@ void Hooks::load()
     on_pre_render_modules.push_back((ModuleBase*) new ModuleFOVChanger());
 
     // Post Module Load
-    BKCImGuiHooker::modules_loaded = true;
+    GKImGuiHooker::modules_loaded = true;
 }
 
 void Hooks::unload()

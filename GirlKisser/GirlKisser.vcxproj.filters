@@ -56,7 +56,7 @@
     <ClInclude Include="Cheat\Module\Impl\ModuleAOEBullets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cheat\Module\Impl\ModuleArrayList.h">
+    <ClInclude Include="Cheat\Module\Impl\ModuleShowEnabledModules.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Cheat\Module\Impl\ModuleBetterScope.h">

@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include "../ModuleBase.h"
 
-static BKCSlider __aoe_range = BKCSlider("Range",  9999, 0, 9999);
-static BKCSlider __aoe_damage = BKCSlider("Damage",  5, 0, 100, "High damage values may cause kicks!");
-static BKCModule __aoe_bullets = { "AOE Bullets", COMBAT, 0x0, false, {(BKCSetting<>*) & __aoe_range, (BKCSetting<>*) &__aoe_damage} };
+static GKSlider __aoe_range = GKSlider("Range",  9999, 0, 9999);
+static GKSlider __aoe_damage = GKSlider("Damage",  5, 0, 100, "High damage values may cause kicks!");
+static GKModule __aoe_bullets = { "AOE Bullets", COMBAT, 0x0, false, {(GKSetting<>*) & __aoe_range, (GKSetting<>*) &__aoe_damage} };
 
 class ModuleAOEBullets : ModuleBase
 {

@@ -1,10 +1,10 @@
 ﻿#pragma once
 #include "../ModuleBase.h"
 
-static BKCSlider __frost_range = BKCSlider("Range",  9999, 0, 9999);
-static BKCSlider __frost_damage = BKCSlider("Damage",  2, 0, 20, "High damage values may cause kicks!");
-static BKCSlider __frost_delay = BKCSlider("Delay",  0.33f, 0.001f, 2, "Low delay values may cause kicks!");
-static BKCModule __frost_aura = { "Frost Aura", COMBAT, 0x0, false, {(BKCSetting<>*) &__frost_range, (BKCSetting<>*) &__frost_damage, (BKCSetting<>*) &__frost_delay} };
+static GKSlider __frost_range = GKSlider("Range",  9999, 0, 9999);
+static GKSlider __frost_damage = GKSlider("Damage",  2, 0, 20, "High damage values may cause kicks!");
+static GKSlider __frost_delay = GKSlider("Delay",  0.33f, 0.001f, 2, "Low delay values may cause kicks!");
+static GKModule __frost_aura = { "Frost Aura", COMBAT, 0x0, false, {(GKSetting<>*) &__frost_range, (GKSetting<>*) &__frost_damage, (GKSetting<>*) &__frost_delay} };
 
 class ModuleFrostAura : ModuleBase
 {

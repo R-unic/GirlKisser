@@ -8,9 +8,9 @@
 #include "../../Hooks/Hooks.h"
 #include "../../Internal/Functions.h"
 
-static BKCCheckbox __aim_bot_through_walls = BKCCheckbox("Through Walls", false);
-static BKCCheckbox __aim_bot_body_shot = BKCCheckbox("Body Shot", false);
-static BKCModule __aim_bot = { "Aim Bot", COMBAT, 0x0, false, {(BKCSetting<>*) &__aim_bot_through_walls, (BKCSetting<>*) &__aim_bot_body_shot} };
+static GKCheckbox __aim_bot_through_walls = GKCheckbox("Through Walls", false);
+static GKCheckbox __aim_bot_body_shot = GKCheckbox("Body Shot", false);
+static GKModule __aim_bot = { "Aim Bot", COMBAT, 0x0, false, {(GKSetting<>*) &__aim_bot_through_walls, (GKSetting<>*) &__aim_bot_body_shot} };
 
 static std::map<std::string, Unity::Vector3> player_pos_cache;
 static RECT window_size;
