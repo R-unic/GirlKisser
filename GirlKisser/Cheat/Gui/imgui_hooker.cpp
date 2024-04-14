@@ -7,10 +7,12 @@
 #include <d3d11.h>
 #include <vector>
 #include <algorithm>
+#include <filesystem>
 
 #include "imgui_hooker.h"
 #include "../Logger/Logger.h"
 #include "../Hooks/Hooks.h"
+#include <thread>
 
 #pragma comment( lib, "d3d11.lib" )
 
@@ -25,6 +27,9 @@ std::stringstream full_title;
 static char config_file[32] = "default";
 static ImU32 color_title = ImGui::ColorConvertFloat4ToU32({0.875f, 0.12f, 0.9f, 1.00f});
 static ImU32 color_bg = ImGui::ColorConvertFloat4ToU32({0.00f, 0.00f, 0.00f, 0.75f});
+std::string combo_file = "default";
+std::string current_font = "C:/Windows/Fonts/comic.ttf";
+static bool boundless_value_setting = false;
 
 void InitModules(const std::vector<GKModule>& init_mods);
 void HandleModuleSettingRendering(GKModule& module);
@@ -32,9 +37,9 @@ void HandleModuleRendering(GKModule& module);
 void HandleCategoryRendering(const std::string& name, GKCategory cat);
 
 // https://github.com/ocornut/imgui/issues/707
-void embraceTheDarkness()
+void initStyle()
 {
-ImGuiStyle* style = &ImGui::GetStyle();
+    ImGuiStyle* style = &ImGui::GetStyle();
     ImVec4* colors = style->Colors;
 
     colors[ImGuiCol_Text]                   = ImVec4(0.92f, 0.92f, 0.92f, 1.00f);
@@ -149,7 +154,7 @@ std::wstring get_executing_directory()
     return std::wstring(buffer).substr(0, pos);
 }
 
-std::string sanity_config(const std::wstring* dir)
+std::string sanity_config(const std::wstring* dir, const char* config_file)
 {
     const std::wstring config_dir = *dir + L"/GK_config";
     CreateDirectory(config_dir.c_str(), nullptr);
@@ -207,10 +212,25 @@ void panic()
     Logger::log_info("Panic! Reset all settings to default");
 }
 
-void load_config()
+std::vector<std::string> get_config_names() {
+	std::vector<std::string> files;
+	const std::wstring dir = get_executing_directory();
+	const std::wstring config_dir = dir + L"/bkc_config";
+	for (const auto& entry : std::filesystem::directory_iterator(config_dir))
+	{
+		const std::filesystem::path& p = entry.path();
+		std::string str_path = p.generic_string();
+		str_path = str_path.substr(str_path.find_last_of("\\/") + 1);
+		str_path = str_path.substr(0, str_path.find_last_of("."));
+		files.push_back(str_path);
+	}
+	return files;
+}
+
+void load_config(const char* config_file)
 {
     const std::wstring dir = get_executing_directory();
-    const std::string file_path = sanity_config(&dir);
+    const std::string file_path = sanity_config(&dir, config_file);
     FILE* file;
     fopen_s(&file, file_path.c_str(), "r+");
     std::ifstream in(file);
@@ -307,10 +327,10 @@ void load_config()
     fclose(file);
 }
 
-void save_config()
+void save_config(const char* config_file)
 {
     const std::wstring dir = get_executing_directory();
-    const std::string file_path = sanity_config(&dir);
+    const std::string file_path = sanity_config(&dir, config_file);
     FILE* file;
     fopen_s(&file, file_path.c_str(), "w+");
     std::ofstream out(file);
@@ -350,6 +370,22 @@ void save_config()
     fclose(file);
 }
 
+std::vector<std::string> native_font_list(bool ttf_only)
+{
+    std::vector<std::string> paths;
+    const std::string path = "C:/Windows/Fonts";
+    for (const auto & entry : std::filesystem::directory_iterator(path))
+    {
+        const std::filesystem::path& p = entry.path();
+        if (ttf_only && !p.extension().string().contains("ttf")) continue;
+        if (p.extension().string().contains("wing")) continue;
+        // std::string str_path = p.generic_string();
+        // str_path = str_path.replace(str_path.begin(), str_path.end(), "/", "\\");
+        paths.push_back(p.generic_string());
+    }
+    return paths;
+}
+
 HWND imgui_hwnd;
 std::list<GKModule*> GKImGuiHooker::modules = {};
 ImFont* GKImGuiHooker::gui_font = nullptr;
@@ -362,6 +398,7 @@ float GKImGuiHooker::scale_factor = 1;
 std::string GKImGuiHooker::c_Title = "GirlKisser";
 std::string GKImGuiHooker::c_Build = "v1.1-BETA";
 std::string GKImGuiHooker::c_Message = "Tits <3";
+std::vector<std::string> fonts = native_font_list(true);
 
 void GKImGuiHooker::setup_imgui_hwnd(HWND handle, ID3D11Device * device, ID3D11DeviceContext * device_context)
 {
@@ -377,7 +414,7 @@ void GKImGuiHooker::setup_imgui_hwnd(HWND handle, ID3D11Device * device, ID3D11D
     io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
     // Load Theme
     ImGui::StyleColorsDark();
-    embraceTheDarkness();
+    initStyle();
     ImGui_ImplWin32_Init(imgui_hwnd);
     ImGui_ImplDX11_Init(device, device_context);
     int horizontal = 0;
@@ -388,13 +425,18 @@ void GKImGuiHooker::setup_imgui_hwnd(HWND handle, ID3D11Device * device, ID3D11D
     multi_out << "Using " << scale_factor << "x scale factor for ImGui fonts";
     Logger::log_info(multi_out.str());
     // create font from file (thank god doesn't need to be only loaded from memory, but still can be)
-    gui_font = io.Fonts->AddFontFromFileTTF(R"(C:\Windows\Fonts\comic.ttf)", 20.0f * scale_factor);
-    watermark_font = io.Fonts->AddFontFromFileTTF(R"(C:\Windows\Fonts\comic.ttf)", 32.0f * scale_factor);
-    arraylist_font = io.Fonts->AddFontFromFileTTF(R"(C:\Windows\Fonts\comic.ttf)", 24.0f * scale_factor);
+    gui_font = io.Fonts->AddFontFromFileTTF(current_font.c_str(), 20.0f * scale_factor);
+    watermark_font = io.Fonts->AddFontFromFileTTF(current_font.c_str(), 32.0f * scale_factor);
+    arraylist_font = io.Fonts->AddFontFromFileTTF(current_font.c_str(), 24.0f * scale_factor);
 }
 
 void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11DeviceContext* g_pd3dDeviceContext)
 {
+    while (gui_font == nullptr || watermark_font == nullptr || arraylist_font == nullptr)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    }
+    
     // Load Config
     if (modules_loaded && !config_loaded)
     {
@@ -419,31 +461,94 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
         HandleCategoryRendering("Rewards", REWARDS);
         HandleCategoryRendering("Meta", META);
         HandleCategoryRendering("Uncategorized", NONE);
+
         // Configs
         if (ImGui::CollapsingHeader("Config"))
         {
-            ImGui::Indent();
+			ImGui::Indent();
+
+            ImGui::InputText("##config_text", config_file, sizeof(config_file));
+            ImGui::SameLine();
+			if (ImGui::Button("Create"))
+			{
+				save_config(config_file);
+			}
+
+			std::vector<std::string> files = get_config_names();
+
+			if (ImGui::BeginCombo("##config_combo", combo_file.c_str()))
+			{
+				for (std::string::size_type i = 0; i < files.size(); i++)
+				{
+					const bool selected = combo_file == files[i];
+
+					if (ImGui::Selectable(files[i].c_str(), selected))
+					{
+						combo_file = files[i];
+					}
+					if (selected) ImGui::SetItemDefaultFocus();
+				}
+
+				ImGui::EndCombo();
+			}
+            
+            ImGui::SameLine();
             if (ImGui::Button("Load"))
             {
-                load_config();
+                load_config(combo_file.c_str());
             }
             ImGui::SameLine();
             if (ImGui::Button("Save"))
             {
-                save_config();
+                save_config(combo_file.c_str());
             }
-            ImGui::SameLine();
-            ImGui::InputText("", config_file, sizeof(config_file));
-            ImGui::Unindent();
+
+			ImGui::Unindent();
         }
-        // Extra
-        if (ImGui::CollapsingHeader("Extra"))
+
+        // Hack client stuff
+        if (ImGui::CollapsingHeader("Client"))
         {
             ImGui::Indent();
             if (ImGui::Button("Panic"))
             {
                 panic();
             }
+
+            if (ImGui::BeginCombo("Font", current_font.c_str()))
+            {
+                for (std::string::size_type i = 0; i < fonts.size(); i++)
+                {
+                    const bool selected = current_font == fonts[i];
+
+                    if (ImGui::Selectable(fonts[i].c_str(), selected))
+                    {
+                        current_font = fonts[i];
+                        ImGuiIO& io = ImGui::GetIO(); (void)io;
+                        gui_font = io.Fonts->AddFontFromFileTTF(current_font.c_str(), 20.0f * scale_factor);
+                        watermark_font = io.Fonts->AddFontFromFileTTF(current_font.c_str(), 32.0f * scale_factor);
+                        arraylist_font = io.Fonts->AddFontFromFileTTF(current_font.c_str(), 24.0f * scale_factor);
+                        io.Fonts->Build();
+                        // force invalidation and new frames
+                        ImGui_ImplDX11_InvalidateDeviceObjects();
+                        ImGui_ImplDX11_NewFrame();
+                        ImGui_ImplWin32_NewFrame();
+                        ImGui::NewFrame();
+                        Logger::log_info("Changed client font to " + current_font);
+                        return;
+                    }
+                    if (selected) ImGui::SetItemDefaultFocus();
+                }
+
+                ImGui::EndCombo();
+            }
+
+            ImGui::Checkbox("Boundless Sliders", &boundless_value_setting);
+            if (ImGui::IsItemHovered())
+            {
+                ImGui::SetTooltip("Allow setting values on sliders below or above minimum and maximum when manually changing them (CTRL Clicking)");
+            }
+
             ImGui::Unindent();
         }
 
@@ -490,14 +595,14 @@ void HandleModuleSettingRendering(GKModule& module)
             auto* slider = (GKSlider*)setting;
             per_module_name << setting->name << "##" << module.name << setting->type;
             ImGui::SliderFloat(per_module_name.str().c_str(), &slider->value, slider->minimum, slider->maximum);
-            slider->value = std::ranges::clamp(slider->value, slider->minimum, slider->maximum);
+            if (!boundless_value_setting) slider->value = std::ranges::clamp(slider->value, slider->minimum, slider->maximum);
         }
         else if (setting->type == 3)
         {
             auto* slider = (GKSliderInt*)setting;
             per_module_name << setting->name << "##" << module.name << setting->type;
             ImGui::SliderInt(per_module_name.str().c_str(), &slider->value, slider->minimum, slider->maximum);
-            slider->value = std::ranges::clamp(slider->value, slider->minimum, slider->maximum);
+            if (!boundless_value_setting) slider->value = std::ranges::clamp(slider->value, slider->minimum, slider->maximum);
         }
         else if (setting->type == 4)
         {
