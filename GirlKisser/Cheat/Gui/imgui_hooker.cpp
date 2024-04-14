@@ -459,7 +459,6 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
         HandleCategoryRendering("Movement", MOVEMENT);
         HandleCategoryRendering("Player", PLAYER);
         HandleCategoryRendering("Rewards", REWARDS);
-        HandleCategoryRendering("Meta", META);
         HandleCategoryRendering("Uncategorized", NONE);
 
         // Configs
@@ -514,6 +513,9 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
             {
                 panic();
             }
+
+            auto show_enabled = *std::find_if(modules.begin(), modules.end(), [](const auto& module) { return module->name == "Show Enabled Modules"; });
+            HandleModuleRendering(*show_enabled);
 
             if (ImGui::BeginCombo("Font", current_font.c_str()))
             {
@@ -661,6 +663,7 @@ void HandleCategoryRendering(const std::string& name, const GKCategory cat)
         for (auto& module : GKImGuiHooker::modules)
         {
             if (module->category != cat) continue;
+            if (module->name == "Show Enabled Modules") continue;
             HandleModuleRendering(*module);
         }
     }

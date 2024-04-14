@@ -101,8 +101,7 @@ enum GKCategory
     VISUAL = 3,
     MOVEMENT = 4,
     PLAYER = 5,
-    REWARDS = 6,
-    META = 7
+    REWARDS = 6
 };
 
 class GKModule
