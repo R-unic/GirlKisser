@@ -531,7 +531,7 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
                         io.Fonts->Build();
                         // force invalidation and new frames
                         ImGui_ImplDX11_InvalidateDeviceObjects();
-                        ImGui_ImplDX11_NewFrame();
+                        ImGui_ImplDX11_NewFrame(); 
                         ImGui_ImplWin32_NewFrame();
                         ImGui::NewFrame();
                         Logger::log_info("Changed client font to " + current_font);
