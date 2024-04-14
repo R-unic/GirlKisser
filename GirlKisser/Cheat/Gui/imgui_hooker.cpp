@@ -36,48 +36,62 @@ void HandleModuleSettingRendering(GKModule& module);
 void HandleModuleRendering(GKModule& module);
 void HandleCategoryRendering(const std::string& name, GKCategory cat);
 
-// https://github.com/ocornut/imgui/issues/707
-void initStyle()
+struct Theme
 {
-    ImGuiStyle* style = &ImGui::GetStyle();
-    ImVec4* colors = style->Colors;
+    ImVec4 solid_bg;
+    ImVec4 dark_main;
+    ImVec4 main;
+    ImVec4 highlight;
+};
+
+// https://github.com/ocornut/imgui/issues/707
+void init_style()
+{
+    auto style = &ImGui::GetStyle();
+    auto colors = style->Colors;
+    auto theme = Theme {
+        ImVec4(0.00f, 0.00f, 0.00f, 0.00f),
+        ImVec4(0.49f, 0.145f, 0.439f, 1.00f),
+        ImVec4(0.875f, 0.12f, 0.9f, 1.00f),
+        ImVec4(0.82f, 0.35f, 0.75f, 1.00f),
+    };
 
     colors[ImGuiCol_Text]                   = ImVec4(0.92f, 0.92f, 0.92f, 1.00f);
     colors[ImGuiCol_TextDisabled]           = ImVec4(0.44f, 0.44f, 0.44f, 1.00f);
     colors[ImGuiCol_WindowBg]               = ImVec4(0.06f, 0.06f, 0.06f, 0.75f);
-    colors[ImGuiCol_ChildBg]                = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+    colors[ImGuiCol_ChildBg]                = theme.solid_bg;
     colors[ImGuiCol_PopupBg]                = ImVec4(0.08f, 0.08f, 0.08f, 0.94f);
-    colors[ImGuiCol_Border]                 = ImVec4(0.49f, 0.145f, 0.439f, 1.00f);
-    colors[ImGuiCol_BorderShadow]           = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+    colors[ImGuiCol_Border]                 = theme.dark_main;
+    colors[ImGuiCol_BorderShadow]           = theme.solid_bg;
     colors[ImGuiCol_FrameBg]                = ImVec4(0.11f, 0.11f, 0.11f, 1.00f);
     colors[ImGuiCol_FrameBgHovered]         = ImVec4(0.51f, 0.36f, 0.15f, 1.00f);
     colors[ImGuiCol_FrameBgActive]          = ImVec4(0.78f, 0.55f, 0.21f, 1.00f);
-    colors[ImGuiCol_TitleBg]                = ImVec4(0.49f, 0.145f, 0.439f, 1.00f);
-    colors[ImGuiCol_TitleBgActive]          = ImVec4(0.875f, 0.12f, 0.9f, 1.00f);
+    colors[ImGuiCol_TitleBg]                = theme.dark_main;
+    colors[ImGuiCol_TitleBgActive]          = theme.main;
     colors[ImGuiCol_TitleBgCollapsed]       = ImVec4(0.00f, 0.00f, 0.00f, 0.51f);
     colors[ImGuiCol_MenuBarBg]              = ImVec4(0.11f, 0.11f, 0.11f, 1.00f);
     colors[ImGuiCol_ScrollbarBg]            = ImVec4(0.06f, 0.06f, 0.06f, 0.53f);
     colors[ImGuiCol_ScrollbarGrab]          = ImVec4(0.21f, 0.21f, 0.21f, 1.00f);
     colors[ImGuiCol_ScrollbarGrabHovered]   = ImVec4(0.47f, 0.47f, 0.47f, 1.00f);
     colors[ImGuiCol_ScrollbarGrabActive]    = ImVec4(0.81f, 0.83f, 0.81f, 1.00f);
-    colors[ImGuiCol_CheckMark]              = ImVec4(0.82f, 0.35f, 0.75f, 1.00f);
-    colors[ImGuiCol_SliderGrab]             = ImVec4(0.875f, 0.12f, 0.9f, 1.00f);
-    colors[ImGuiCol_SliderGrabActive]       = ImVec4(0.875f, 0.12f, 0.9f, 1.00f);
-    colors[ImGuiCol_Button]                 = ImVec4(0.49f, 0.145f, 0.439f, 1.00f);
-    colors[ImGuiCol_ButtonHovered]          = ImVec4(0.875f, 0.12f, 0.9f, 1.00f);
-    colors[ImGuiCol_ButtonActive]           = ImVec4(0.82f, 0.35f, 0.75f, 1.00f);
-    colors[ImGuiCol_Header]                 = ImVec4(0.49f, 0.145f, 0.439f, 1.00f);
-    colors[ImGuiCol_HeaderHovered]          = ImVec4(0.875f, 0.12f, 0.9f, 1.00f);
+    colors[ImGuiCol_CheckMark]              = theme.highlight;
+    colors[ImGuiCol_SliderGrab]             = theme.main;
+    colors[ImGuiCol_SliderGrabActive]       = theme.main;
+    colors[ImGuiCol_Button]                 = theme.dark_main;
+    colors[ImGuiCol_ButtonHovered]          = theme.main;
+    colors[ImGuiCol_ButtonActive]           = theme.highlight;
+    colors[ImGuiCol_Header]                 = theme.dark_main;
+    colors[ImGuiCol_HeaderHovered]          = theme.main;
     colors[ImGuiCol_HeaderActive]           = ImVec4(0.93f, 0.65f, 0.14f, 1.00f);
     colors[ImGuiCol_Separator]              = ImVec4(0.21f, 0.21f, 0.21f, 1.00f);
-    colors[ImGuiCol_SeparatorHovered]       = ImVec4(0.875f, 0.12f, 0.9f, 1.00f);
-    colors[ImGuiCol_SeparatorActive]        = ImVec4(0.82f, 0.35f, 0.75f, 1.00f);
+    colors[ImGuiCol_SeparatorHovered]       = theme.main;
+    colors[ImGuiCol_SeparatorActive]        = theme.highlight;
     colors[ImGuiCol_ResizeGrip]             = ImVec4(0.21f, 0.21f, 0.21f, 1.00f);
-    colors[ImGuiCol_ResizeGripHovered]      = ImVec4(0.875f, 0.12f, 0.9f, 1.00f);
-    colors[ImGuiCol_ResizeGripActive]       = ImVec4(0.82f, 0.35f, 0.75f, 1.00f);
-    colors[ImGuiCol_Tab]                    = ImVec4(0.49f, 0.145f, 0.439f, 1.00f);
-    colors[ImGuiCol_TabHovered]             = ImVec4(0.875f, 0.12f, 0.9f, 1.00f);
-    colors[ImGuiCol_TabActive]              = ImVec4(0.82f, 0.35f, 0.75f, 1.00f);
+    colors[ImGuiCol_ResizeGripHovered]      = theme.main;
+    colors[ImGuiCol_ResizeGripActive]       = theme.highlight;
+    colors[ImGuiCol_Tab]                    = theme.dark_main;
+    colors[ImGuiCol_TabHovered]             = theme.main;
+    colors[ImGuiCol_TabActive]              = theme.highlight;
     colors[ImGuiCol_TabUnfocused]           = ImVec4(0.07f, 0.10f, 0.15f, 0.97f);
     colors[ImGuiCol_TabUnfocusedActive]     = ImVec4(0.14f, 0.26f, 0.42f, 1.00f);
     colors[ImGuiCol_PlotLines]              = ImVec4(0.61f, 0.61f, 0.61f, 1.00f);
@@ -370,22 +384,6 @@ void save_config(const char* config_file)
     fclose(file);
 }
 
-std::vector<std::string> native_font_list(bool ttf_only)
-{
-    std::vector<std::string> paths;
-    const std::string path = "C:/Windows/Fonts";
-    for (const auto & entry : std::filesystem::directory_iterator(path))
-    {
-        const std::filesystem::path& p = entry.path();
-        if (ttf_only && !p.extension().string().contains("ttf")) continue;
-        if (p.extension().string().contains("wing")) continue;
-        // std::string str_path = p.generic_string();
-        // str_path = str_path.replace(str_path.begin(), str_path.end(), "/", "\\");
-        paths.push_back(p.generic_string());
-    }
-    return paths;
-}
-
 HWND imgui_hwnd;
 std::list<GKModule*> GKImGuiHooker::modules = {};
 ImFont* GKImGuiHooker::gui_font = nullptr;
@@ -396,7 +394,7 @@ bool GKImGuiHooker::config_loaded = false;
 bool GKImGuiHooker::c_GuiEnabled = false;
 float GKImGuiHooker::scale_factor = 1;
 std::string GKImGuiHooker::c_Title = "GirlKisser";
-std::string GKImGuiHooker::c_Build = "v1.1-BETA";
+std::string GKImGuiHooker::c_Build = "v1.3-BETA";
 std::string GKImGuiHooker::c_Message = "Tits <3";
 std::vector<std::string> fonts = native_font_list(true);
 
@@ -414,7 +412,7 @@ void GKImGuiHooker::setup_imgui_hwnd(HWND handle, ID3D11Device * device, ID3D11D
     io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
     // Load Theme
     ImGui::StyleColorsDark();
-    initStyle();
+    init_style();
     ImGui_ImplWin32_Init(imgui_hwnd);
     ImGui_ImplDX11_Init(device, device_context);
     int horizontal = 0;
@@ -537,6 +535,30 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
                         return;
                     }
                     if (selected) ImGui::SetItemDefaultFocus();
+                }
+
+                if (ImGui::BeginCombo("Theme", current_theme.c_str()))
+                {
+                    for (std::string::size_type i = 0; i < fonts.size(); i++)
+                    {
+                        const bool selected = current_theme == themes[i];
+
+                        if (ImGui::Selectable(themes[i].c_str(), selected))
+                        {
+                            current_theme = themes[i];
+                            ImGuiIO& io = ImGui::GetIO(); (void)io;
+                            
+                            
+                            // force invalidation and new frames
+                            ImGui_ImplDX11_InvalidateDeviceObjects();
+                            ImGui_ImplDX11_NewFrame();
+                            ImGui_ImplWin32_NewFrame();
+                            ImGui::NewFrame();
+                            Logger::log_info("Changed client theme to " + current_theme);
+                            return;
+                        }
+                        if (selected) ImGui::SetItemDefaultFocus();
+                    }
                 }
 
                 ImGui::EndCombo();
