@@ -514,9 +514,6 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
                 panic();
             }
 
-            auto show_enabled = *std::find_if(modules.begin(), modules.end(), [](const auto& module) { return module->name == "Show Enabled Modules"; });
-            HandleModuleRendering(*show_enabled);
-
             if (ImGui::BeginCombo("Font", current_font.c_str()))
             {
                 for (std::string::size_type i = 0; i < fonts.size(); i++)
@@ -548,7 +545,14 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
             ImGui::Checkbox("Boundless Sliders", &boundless_value_setting);
             if (ImGui::IsItemHovered())
             {
-                ImGui::SetTooltip("Allow setting values on sliders below or above minimum and maximum when manually changing them (CTRL Clicking)");
+                ImGui::SetTooltip("Use at your own risk. Allow setting values on sliders below or above minimum and maximum when manually changing them (CTRL Clicking)");
+            }
+
+            auto show_enabled = *std::find_if(modules.begin(), modules.end(), [](const auto& module) { return module->name == "Show Enabled Modules"; });
+            ImGui::Checkbox("Show Enabled Modules", &show_enabled->enabled);
+            if (ImGui::IsItemHovered())
+            {
+                ImGui::SetTooltip("Display a list of each module currently enabled");
             }
 
             ImGui::Unindent();
