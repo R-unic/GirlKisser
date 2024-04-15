@@ -31,7 +31,7 @@
 
 #include "../../IL2CPPResolver/IL2CPP_Resolver.hpp"
 #include "../Module/Impl/ModuleAimBot.h"
-#include "../Module/Impl/ModuleInfiniteArmor.h"
+#include "../Module/Impl/ModuleArmorRegen.h"
 #include "../Module/Impl/ModuleAntiHeadshot.h"
 #include "../Module/Impl/ModuleAntiBarrier.h"
 #include "../Module/Impl/ModuleEffectImmunity.h"
@@ -408,7 +408,7 @@ void Hooks::load()
     weapon_sounds_modules.push_back((ModuleBase*) new ModuleScoreMultiplier());
     weapon_sounds_modules.push_back((ModuleBase*) new ModuleXRay());
     weapon_sounds_modules.push_back((ModuleBase*) new ModuleDoubleJump());
-    weapon_sounds_modules.push_back((ModuleBase*) new ModuleInfiniteArmor());
+    weapon_sounds_modules.push_back((ModuleBase*) new ModuleArmorRegen());
 
     // Will wreak havoc on literally everyone, even other cheaters :D
     weapon_sounds_modules.push_back((ModuleBase*) new ModuleAntiHeadshot());
