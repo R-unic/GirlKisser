@@ -7,12 +7,16 @@
 - If someone asks you to pay for this program or complete a task to obtain it you are getting scammed!
 
 > ## Features:
-> - AimBot
+> - Aimbot
+> - Anti Barrier
+> - Anti Headshot
 > - AOE Bullets
-> - Show Enabled Modules
+> - Armor Regen
 > - Better Scope
 > - Criticals
 > - Debuffer
+> - Double Jump
+> - Effect Immunity
 > - ESP
 > - FOV Changer
 > - Frost Aura
@@ -20,15 +24,19 @@
 > - Heal
 > - Infinite Ammo
 > - Infinite Gem Claim
-> - Rewards multiplier
 > - Instant Charge
 > - Invisibility
+> - No Recoil
+> - Panic Button
 > - Rapid Fire
 > - Reach
-> - No Recoil
+> - Rewards Multiplier
 > - Score Multiplier
+> - Season Pass Spoofer
+> - Show Enabled Modules
 > - Speed
 > - Spread
+> - Theming & Fonts
 > - XRay
 
 ## Building
