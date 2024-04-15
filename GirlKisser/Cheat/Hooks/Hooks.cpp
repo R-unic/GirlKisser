@@ -34,6 +34,7 @@
 #include "../Module/Impl/ModuleInfiniteArmor.h"
 #include "../Module/Impl/ModuleAntiHeadshot.h"
 #include "../Module/Impl/ModuleAntiBarrier.h"
+#include "../Module/Impl/ModuleEffectImmunity.h"
 #include "../Module/Impl/ModuleShowEnabledModules.h"
 #include "../Module/Impl/ModuleDoubleJump.h"
 #include "../Module/Impl/ModuleESP.h"
@@ -412,6 +413,7 @@ void Hooks::load()
     // Will wreak havoc on literally everyone, even other cheaters :D
     weapon_sounds_modules.push_back((ModuleBase*) new ModuleAntiHeadshot());
     weapon_sounds_modules.push_back((ModuleBase*) new ModuleAntiBarrier());
+    weapon_sounds_modules.push_back((ModuleBase*) new ModuleEffectImmunity());
     
     player_damageable_modules.push_back((ModuleBase*) new ModuleInfiniteAmmo());
     player_damageable_modules.push_back((ModuleBase*) new ModuleHeal());
