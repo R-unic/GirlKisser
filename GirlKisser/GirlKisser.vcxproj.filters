@@ -140,5 +140,8 @@
     <ClInclude Include="Cheat\Module\Impl\ModuleSeasonPass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Cheat\Module\Impl\ModuleInfiniteArmor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
