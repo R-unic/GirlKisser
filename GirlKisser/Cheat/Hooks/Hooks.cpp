@@ -200,6 +200,10 @@ inline void __stdcall player_move_c(void* arg)
             }
             Hooks::our_player = arg;
         }
+        for (ModuleBase* player_move_c_module : player_move_c_modules)
+        {
+            player_move_c_module->run(arg);
+        }
     }
     else
     {
@@ -275,7 +279,7 @@ inline void (__stdcall* on_scene_unload_original)(void* arg);
 inline void __stdcall on_scene_unload(void* arg)
 {
     Hooks::main_camera = nullptr;
-    nuke_player_list();
+    // nuke_player_list();
 
     // Get Old Scene Name
     /*
