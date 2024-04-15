@@ -532,9 +532,10 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
 
             ImGui::InputText("##config_text", config_file, sizeof(config_file));
             ImGui::SameLine();
-			if (ImGui::Button("Create"))
+			if (ImGui::Button("Create##config"))
 			{
 				save_config(config_file);
+                combo_file = config_file;
 			}
 
 			std::vector<std::string> files = get_config_names();
@@ -646,6 +647,26 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
             }
 
             ImGui::Unindent();
+        }
+
+        if (ImGui::CollapsingHeader("Runtime Hooks (Dev)"))
+        {
+            {
+                ImGui::Indent();
+
+
+                ImGui::InputText("Offset##rhd", offsets_rhd, sizeof(offsets_rhd));
+                ImGui::InputText("Return##rhd", return_rhd, sizeof(return_rhd));
+                if (ImGui::Button("Create"))
+                {
+                    if (ImGui::Button("Create##rhd"))
+                    {
+                        try_runtime_hook();
+                    }
+                }
+                    
+                ImGui::Unindent();
+            }
         }
 
         ImGui::End();
