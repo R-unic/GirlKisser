@@ -97,6 +97,17 @@ void init_style()
         };
     }
 
+    std::stringstream solid_bg_info, dark_main_info, main_info, highlight_info;
+    solid_bg_info << "theme.solid_bg " << theme.solid_bg.x << ", " << theme.solid_bg.y << ", " << theme.solid_bg.z;
+    solid_bg_info << "theme.dark_main " << theme.dark_main.x << ", " << theme.dark_main.y << ", " << theme.dark_main.z;
+    solid_bg_info << "theme.main " << theme.main.x << ", " << theme.main.y << ", " << theme.main.z;
+    solid_bg_info << "theme.highlight " << theme.highlight.x << ", " << theme.highlight.y << ", " << theme.highlight.z;
+
+    Logger::log_info(solid_bg_info.str());
+    Logger::log_info(dark_main_info.str());
+    Logger::log_info(main_info.str());
+    Logger::log_info(highlight_info.str());
+
     colors[ImGuiCol_Text]                   = ImVec4(0.92f, 0.92f, 0.92f, 1.00f);
     colors[ImGuiCol_TextDisabled]           = ImVec4(0.44f, 0.44f, 0.44f, 1.00f);
     colors[ImGuiCol_WindowBg]               = ImVec4(0.06f, 0.06f, 0.06f, 0.75f);
