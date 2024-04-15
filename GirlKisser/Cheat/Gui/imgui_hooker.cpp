@@ -670,7 +670,7 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
                         current_theme = themes[i];
 
                         // force invalidation, new frames, and style change
-                        // init_style();
+                        init_style();
                         ImGui_ImplDX11_InvalidateDeviceObjects();
                         ImGui_ImplDX11_NewFrame();
                         ImGui_ImplWin32_NewFrame();
