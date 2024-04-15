@@ -305,7 +305,7 @@ void panic()
 std::vector<std::string> get_config_names() {
 	std::vector<std::string> files;
 	const std::wstring dir = get_executing_directory();
-	const std::wstring config_dir = dir + L"/bkc_config";
+	const std::wstring config_dir = dir + L"/GK_config";
 	for (const auto& entry : std::filesystem::directory_iterator(config_dir))
 	{
 		const std::filesystem::path& p = entry.path();
@@ -341,7 +341,6 @@ void load_config(const char* config_file)
     for (const auto& module : GKImGuiHooker::modules)
     {
         std::string found;
-        const std::string NOT_FOUND = "not_found";
         std::stringstream pe;
         pe << module->name << ";" << "enabled" << ";";
         bool enabled;
@@ -574,7 +573,7 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
             ImGui::SameLine();
 			if (ImGui::Button("Create##config"))
 			{
-				save_config(config_file);
+                save_config(config_file);
                 combo_file = config_file;
 			}
 
