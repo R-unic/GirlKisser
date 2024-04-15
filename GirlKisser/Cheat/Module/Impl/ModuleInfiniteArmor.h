@@ -3,10 +3,10 @@
 
 static GKModule __infinite_armor = { "Infinite Armor", PLAYER, 0x0, true, {} };
 
-class InfiniteArmor : ModuleBase
+class ModuleInfiniteArmor : ModuleBase
 {
 public:
-    InfiniteArmor() : ModuleBase(&__infinite_armor) {}
+    ModuleInfiniteArmor() : ModuleBase(&__infinite_armor) {}
 
     void do_module(void* arg) override
     {
