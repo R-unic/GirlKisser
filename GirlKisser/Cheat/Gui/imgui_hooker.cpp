@@ -460,7 +460,7 @@ bool GKImGuiHooker::config_loaded = false;
 bool GKImGuiHooker::c_GuiEnabled = false;
 float GKImGuiHooker::scale_factor = 1;
 std::string GKImGuiHooker::c_Title = "GirlKisser";
-std::string GKImGuiHooker::c_Build = "v1.3-BETA";
+std::string GKImGuiHooker::c_Build = "v1.4-BETA";
 std::string GKImGuiHooker::c_Message = "Tits <3";
 
 
