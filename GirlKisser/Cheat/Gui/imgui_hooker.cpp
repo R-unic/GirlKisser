@@ -34,6 +34,7 @@ static LPVOID last_rhd = nullptr;
 static ImU32 color_title = ImGui::ColorConvertFloat4ToU32({0.875f, 0.12f, 0.9f, 1.00f});
 static ImU32 color_bg = ImGui::ColorConvertFloat4ToU32({0.00f, 0.00f, 0.00f, 0.75f});
 static bool boundless_value_setting = false;
+static bool font_changed = false;
 
 void InitModules(const std::vector<GKModule>& init_mods);
 void HandleModuleSettingRendering(GKModule& module);
@@ -324,6 +325,8 @@ void load_config(const char* config_file)
         }
         in.close();
     }
+
+    const std::string NOT_FOUND = "not_found";
     
     // Read Modules
     for (const auto& module : GKImGuiHooker::modules)
@@ -401,6 +404,15 @@ void load_config(const char* config_file)
     }
     
     // Read Other Configs
+    std::stringstream data;
+    data << "clientsetting;font;";
+    std::string found = find_or_default_config(lines, data.str());
+    if (found != NOT_FOUND)
+    {
+        current_font = found;
+        font_changed = true;
+    }
+
     std::stringstream msg;
     msg << "Loaded config " << config_file;
     Logger::log_info(msg.str());
@@ -442,6 +454,7 @@ void save_config(const char* config_file)
     }
 
     // Write Other Config
+    out << "clientsetting;font;" << current_font << std::endl;
 
     std::stringstream msg;
     msg << "Saved config " << config_file;
@@ -506,6 +519,24 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
     {
         config_loaded = true;
         Logger::log_info("Loaded default config!");
+    }
+
+    // TODO: Make this not suck
+    if (font_changed)
+    {
+        font_changed = false;
+        ImGuiIO& io2 = ImGui::GetIO(); (void)io2;
+        gui_font = io2.Fonts->AddFontFromFileTTF(current_font.c_str(), 20.0f * scale_factor);
+        watermark_font = io2.Fonts->AddFontFromFileTTF(current_font.c_str(), 32.0f * scale_factor);
+        arraylist_font = io2.Fonts->AddFontFromFileTTF(current_font.c_str(), 24.0f * scale_factor);
+        io2.Fonts->Build();
+        // force invalidation and new frames
+        ImGui_ImplDX11_InvalidateDeviceObjects();
+        ImGui_ImplDX11_NewFrame();
+        ImGui_ImplWin32_NewFrame();
+        ImGui::NewFrame();
+        Logger::log_info("Changed client font to " + current_font);
+        return;
     }
     
     // Start the Dear ImGui frame
