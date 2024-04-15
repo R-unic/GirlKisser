@@ -56,6 +56,7 @@ ModulePriceModifier* lottery_price_module;
 ModuleBase* fast_levels_module;
 ModuleRewardsMultiplier* rewards_multiplier_module;
 ModuleESP* esp_module;
+ModuleAimBot* aim_bot_module;
 ModuleSeasonPass* season_pass_module;
 std::list<ModuleBase*> player_move_c_modules = { };
 std::list<ModuleBase*> player_fps_controller_sharp_modules = { };
@@ -78,6 +79,8 @@ void Hooks::draw_all()
 {
     if (esp_module == nullptr) return;
     esp_module->draw_all();
+    if (aim_bot_module == nullptr) return;
+    aim_bot_module->draw_all_aim();
 }
 
 void nuke_player_list()
@@ -156,6 +159,7 @@ inline void __stdcall weapon_sounds_call(void* arg)
 {
     if (is_my_player_weapon_sounds(arg))
     {
+        if (Hooks::our_player != nullptr) ((ModuleBase*)aim_bot_module)->run(Hooks::our_player);
         for (ModuleBase* weapon_sounds_module : weapon_sounds_modules)
         {
             weapon_sounds_module->run(arg);
@@ -184,17 +188,13 @@ inline void(__stdcall* player_move_c_original)(void* arg);
 inline void __stdcall player_move_c(void* arg)
 {
     bool my_player = is_my_player_move_c(arg);
-    if (!my_player)
-    {
-        // Other Players
-        if (Hooks::main_camera == nullptr) return player_move_c_original(arg);
-        working_player_list.push_back(arg);
-    }
-    else
+
+    if (my_player)
     {
         // My Player
         Hooks::tick++;
-        if (Hooks::tick % 30 == 0)
+
+        if (Hooks::tick % 5 == 0)
         {
             Hooks::main_camera = find_main_camera();
             if (Hooks::main_camera == nullptr)
@@ -203,11 +203,17 @@ inline void __stdcall player_move_c(void* arg)
             }
             Hooks::our_player = arg;
         }
-
         for (ModuleBase* player_move_c_module : player_move_c_modules)
         {
             player_move_c_module->run(arg);
         }
+    }
+    else
+    {
+        // Other Players
+        if (Hooks::main_camera == nullptr) return player_move_c_original(arg);
+        esp_module->add_esp(arg);
+        working_player_list.push_back(arg);
     }
 }
 
@@ -385,7 +391,8 @@ void Hooks::load()
 
     esp_module = new ModuleESP();
     player_move_c_modules.push_back((ModuleBase*) esp_module);
-    player_move_c_modules.push_back((ModuleBase*) new ModuleAimBot());
+    aim_bot_module = new ModuleAimBot();
+    player_move_c_modules.push_back((ModuleBase*) aim_bot_module);
     player_move_c_modules.push_back((ModuleBase*) new ModuleInvisibility());
     /*
      does fucking nothing with these vals xddddd

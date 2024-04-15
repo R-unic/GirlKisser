@@ -255,7 +255,8 @@
     <ClInclude Include="Cheat\Logger\Logger.h" />
     <ClInclude Include="Cheat\Module\Impl\ModuleAimBot.h" />
     <ClInclude Include="Cheat\Module\Impl\ModuleAOEBullets.h" />
-    <ClInclude Include="Cheat\Module\Impl\ModuleInfiniteArmor.h" />
+    <ClInclude Include="Cheat\Module\Impl\ModuleEffectImmunity.h" />
+    <ClInclude Include="Cheat\Module\Impl\ModuleArmorRegen.h" />
     <ClInclude Include="Cheat\Module\Impl\ModuleSeasonPass.h" />
     <ClInclude Include="Cheat\Module\Impl\ModuleShowEnabledModules.h" />
     <ClInclude Include="Cheat\Module\Impl\ModuleBetterScope.h" />
@@ -283,6 +284,7 @@
     <ClInclude Include="Cheat\Module\Impl\ModuleSpread.h" />
     <ClInclude Include="Cheat\Module\Impl\ModuleExtraDisplay.h" />
     <ClInclude Include="Cheat\Module\Impl\ModuleXRay.h" />
+    <ClInclude Include="Cheat\Module\Imp\ModuleAntiBarrier.h" />
     <ClInclude Include="Cheat\Module\ModuleBase.h" />
     <ClCompile Include="kiero\kiero.h" />
   </ItemGroup>

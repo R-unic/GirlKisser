@@ -20,6 +20,5 @@ public:
         if (__immunity_fire.enabled) set_bool(arg, 0x248, true); // fireImmunity
         if (__immunity_bleeding.enabled) set_bool(arg, 0x249, true); // bleedingImmunity
         if (__immunity_toxic.enabled) set_bool(arg, 0x24A, true); // toxicImmunity
-        set_float(arg, 0x66C, 9999); // speedModifier
     }
 };

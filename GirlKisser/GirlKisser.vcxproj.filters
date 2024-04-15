@@ -140,7 +140,13 @@
     <ClInclude Include="Cheat\Module\Impl\ModuleSeasonPass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cheat\Module\Impl\ModuleInfiniteArmor.h">
+    <ClInclude Include="Cheat\Module\Impl\ModuleArmorRegen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cheat\Module\Imp\ModuleAntiBarrier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cheat\Module\Impl\ModuleEffectImmunity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
