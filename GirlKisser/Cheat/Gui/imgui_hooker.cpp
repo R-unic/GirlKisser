@@ -69,7 +69,7 @@ std::vector<std::string> get_native_font_list(bool ttf_only)
 }
 
 auto fonts = get_native_font_list(true);
-std::vector<std::string> themes = {"GirlKisser"};
+std::vector<std::string> themes = {"GirlKisser", "Binary"};
 
 // https://github.com/ocornut/imgui/issues/707
 void init_style()
@@ -82,9 +82,18 @@ void init_style()
     {
         theme = {
             ImVec4(0.00f, 0.00f, 0.00f, 0.00f),
-            ImVec4(0.49f, 0.145f, 0.439f, 1.00f),
-            ImVec4(0.875f, 0.12f, 0.9f, 1.00f),
-            ImVec4(0.82f, 0.35f, 0.75f, 1.00f)
+            ImVec4(125 / 255, 37 / 255, 112 / 255, 1.00f),
+            ImVec4(223 / 255, 31 / 255, 230 / 255, 1.00f),
+            ImVec4(209 / 255, 89 / 255, 191 / 255, 1.00f)
+        };
+    }
+    else if (current_theme == "Binary")
+    {
+        theme = {
+            ImVec4(0.00f, 0.00f, 0.00f, 0.00f),
+            ImVec4(41 / 255, 125 / 255, 37 / 255, 1.00f),
+            ImVec4(41 / 255, 230 / 255, 31 / 255, 1.00f),
+            ImVec4(93 / 255, 209 / 255, 89 / 255, 1.00f)
         };
     }
 

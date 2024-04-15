@@ -43,7 +43,6 @@
 #include "../Module/Impl/ModulePriceModifier.h"
 #include "../Module/Impl/ModuleSeasonPass.h"
 #include "../Module/Impl/ModuleRewardsMultiplier.h"
-#include "../Module/Impl/ModuleExtraDisplay.h"
 
 class ModuleSpeed;
 uintptr_t Hooks::GameBase;
@@ -395,10 +394,6 @@ void Hooks::load()
     aim_bot_module = new ModuleAimBot();
     player_move_c_modules.push_back((ModuleBase*) aim_bot_module);
     player_move_c_modules.push_back((ModuleBase*) new ModuleInvisibility());
-    /*
-     does fucking nothing with these vals xddddd
-    player_move_c_modules.push_back((ModuleBase*) new ModuleExtraDisplay());
-    */
     
     on_imgui_draw_modules.push_back((ModuleBase*) new ModuleShowEnabledModules());
 
