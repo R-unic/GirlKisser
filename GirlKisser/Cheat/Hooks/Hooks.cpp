@@ -3,8 +3,9 @@
 #include <codecvt>
 #include <list>
 #include <sstream>
-
 #include "MinHook.h"
+
+#include  "../Offsets/Offsets.h"
 #include "../Internal/Functions.h"
 #include "../Module/ModuleBase.h"
 #include "../Module/Impl/ModuleAOEBullets.h"
@@ -339,7 +340,7 @@ inline bool __stdcall season_pass_premium(void* arg)
 }
 
 // Static
-void hook_function(uintptr_t offset, LPVOID detour, void* original)
+void hook_function(uint64_t offset, LPVOID detour, void* original)
 {
     if (MH_CreateHook((LPVOID*)(Hooks::GameAssembly + offset), detour, (LPVOID*)original) == MH_OK)
     {
@@ -368,18 +369,18 @@ void Hooks::load()
     MH_Initialize();
     
     // Hook Functions Here
-    hook_function(0x7F0070, &weapon_sounds_call, &weapon_sounds_original);
-    hook_function(0x1B677D0, &player_move_c, &player_move_c_original);
-    hook_function(0x4BBE80, &infinite_gem_claim, &infinite_gem_claim_original);
-    hook_function(0x111B350, &rapid_fire, &rapid_fire_original);
-    hook_function(0x11383E0, &speed, &speed_original);
-    hook_function(0x42D0540, &on_pre_render, &on_pre_render_original);
-    hook_function(0x414C1B0, &on_scene_unload, &on_scene_unload_original);
-    hook_function(0x781F00, &free_lottery, &free_lottery_original);
-    hook_function(0x1AC4C70, &player_move_c_fixed, &player_move_c_fixed_original);
-    hook_function(0xC326E0, &reward_multiplier, &reward_multiplier_original);
-    hook_function(0xC33660, &double_rewards, &double_rewards_original);
-    hook_function(0x18881E0, &season_pass_premium, &season_pass_premium_original);
+    hook_function(Offsets::WeaponSoundsUpdate, &weapon_sounds_call, &weapon_sounds_original);
+    hook_function(Offsets::PlayerMoveCUpdate, &player_move_c, &player_move_c_original);
+    hook_function(Offsets::InfiniteGemClaim, &infinite_gem_claim, &infinite_gem_claim_original);
+    hook_function(Offsets::RapidFire, &rapid_fire, &rapid_fire_original);
+    hook_function(Offsets::Speed, &speed, &speed_original);
+    hook_function(Offsets::OnPreRender, &on_pre_render, &on_pre_render_original);
+    hook_function(Offsets::OnSceneUnload, &on_scene_unload, &on_scene_unload_original);
+    hook_function(Offsets::PriceModifier, &free_lottery, &free_lottery_original);
+    hook_function(Offsets::PlayerMoveCFixedUpdate, &player_move_c_fixed, &player_move_c_fixed_original);
+    hook_function(Offsets::RewardMultiplier, &reward_multiplier, &reward_multiplier_original);
+    hook_function(Offsets::DoubleRewards, &double_rewards, &double_rewards_original);
+    hook_function(Offsets::PremiumPass, &season_pass_premium, &season_pass_premium_original);
     
     // Init Modules Here
     rapid_fire_module = new ModuleRapidFire();

@@ -143,10 +143,13 @@
     <ClInclude Include="Cheat\Module\Impl\ModuleArmorRegen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cheat\Module\Imp\ModuleAntiBarrier.h">
+    <ClInclude Include="Cheat\Module\Impl\ModuleEffectImmunity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cheat\Module\Impl\ModuleEffectImmunity.h">
+    <ClInclude Include="Cheat\Offsets\Offsets.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cheat\Module\Impl\ModuleAntiBarrier.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

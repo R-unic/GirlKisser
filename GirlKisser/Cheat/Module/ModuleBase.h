@@ -2,6 +2,7 @@
 #include <string>
 
 #include "../Gui/imgui_hooker.h"
+#include "../Offsets/Offsets.h"
 
 class ModuleBase
 {
@@ -41,17 +42,17 @@ public:
     virtual void do_module(void* arg) = 0;
 
 protected:
-    static void set_bool(void* arg, intptr_t offset, bool value)
+    static void set_bool(void* arg, uint64_t offset, bool value)
     {
         *(bool*)((uint64_t)arg + offset) = value;
     }
 
-    static void set_float(void* arg, intptr_t offset, float value)
+    static void set_float(void* arg, uint64_t offset, float value)
     {
         *(float*)((uint64_t)arg + offset) = value;
     }
 
-    static void set_int(void* arg, intptr_t offset, int value)
+    static void set_int(void* arg, uint64_t offset, int value)
     {
         *(int*)((uint64_t)arg + offset) = value;
     }
