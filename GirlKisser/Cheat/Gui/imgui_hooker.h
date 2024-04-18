@@ -2,12 +2,11 @@
 
 #include <imgui.h>
 #include <iostream>
-#include <random>
 #include <vector>
 #include <d3d11.h>
 #include <list>
 
-// Girlkisser Module Vars
+// Boykisser Central Module Vars
 template<typename T = int>
 class GKSetting
 {
@@ -74,13 +73,14 @@ public:
 class GKDropdown : public GKSetting<>
 {
 public:
-    GKDropdown(const std::string& setting_name, const std::string& def_val, const std::vector<std::string>& vals, const std::string& extra_info = "")
+    GKDropdown(const std::string& setting_name, const std::string& def_val, const std::vector<std::string>& vals, const std::string& extra_info = "", const bool allow_search = false)
     {
         name = setting_name;
         values = vals;
         current_value = def_val;
         current_index = indexof(def_val);
         tooltip = extra_info;
+        search = allow_search;
         type = 4;
     }
     int indexof(std::string val)
@@ -91,6 +91,8 @@ public:
     int current_index;
     std::string current_value;
     std::vector<std::string> values;
+    bool search;
+    char search_str[64] = "";
 };
 
 enum GKCategory
@@ -101,7 +103,7 @@ enum GKCategory
     VISUAL = 3,
     MOVEMENT = 4,
     PLAYER = 5,
-    REWARDS = 6
+    EXPLOIT = 6
 };
 
 class GKModule
@@ -128,8 +130,9 @@ public:
     static ImFont* watermark_font;
     static ImFont* arraylist_font;
     static std::string c_Title;
-    static std::string c_Message;
     static std::string c_Build;
+    static std::string c_Message;
+    static std::string c_RealBuild;
     static float scale_factor;
     static bool modules_loaded;
     static bool config_loaded;

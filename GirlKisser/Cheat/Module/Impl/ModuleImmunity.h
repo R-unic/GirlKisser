@@ -2,13 +2,13 @@
 #include "../ModuleBase.h"
 #include "../../Offsets/Offsets.h"
 
-static BKCCheckbox __immunity_poison = BKCCheckbox{ "Poison", true };
+static GKCheckbox __immunity_poison = GKCheckbox{ "Poison", true };
 
-static BKCCheckbox __immunity_bleeding = BKCCheckbox{ "Slow", true };
+static GKCheckbox __immunity_bleeding = GKCheckbox{ "Slow", true };
 
-static BKCCheckbox __immunity_toxic = BKCCheckbox{ "Stun", true };
+static GKCheckbox __immunity_toxic = GKCheckbox{ "Stun", true };
 
-static BKCModule __immunity = { "Immunity", PLAYER, 0x0, ImGuiKey_5, true, {&__immunity_poison, &__immunity_bleeding, &__immunity_toxic} };
+static GKModule __immunity = { "Immunity", PLAYER, 0x0, ImGuiKey_5, true, {(GKSetting<int>*)&__immunity_poison, (GKSetting<int>*)&__immunity_bleeding, (GKSetting<int>*)&__immunity_toxic} };
 
 
 class ModuleImmunity : ModuleBase

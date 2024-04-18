@@ -4,7 +4,7 @@
 
 class ModuleBase;
 static GKSliderInt __rewards_multiplier_amount = GKSliderInt("Amount", 3, 1, 3500);
-static GKModule __rewards_multiplier = { "Rewards Multiplier", REWARDS, 0x0, ImGuiKey_None, true, {(GKSetting<>*) &__rewards_multiplier_amount} };
+static GKModule __rewards_multiplier = { "Rewards Multiplier", EXPLOIT, 0x0, ImGuiKey_None, true, {(GKSetting<>*) &__rewards_multiplier_amount} };
 
 class ModuleRewardsMultiplier : ModuleBase
 {

@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../ModuleBase.h"
 
-static BKCModule __infinite_armor = { "Infinite Armor", PLAYER, 0x0, ImGuiKey_7, false, {} };
+static GKModule __infinite_armor = { "Infinite Armor", PLAYER, 0x0, ImGuiKey_7, false, {} };
 
 class ModuleInfiniteArmor : ModuleBase
 {
