@@ -6,7 +6,7 @@
 #include <d3d11.h>
 #include <list>
 
-// Boykisser Central Module Vars
+// Girlkisser Central Module Vars
 template<typename T = int>
 class GKSetting
 {

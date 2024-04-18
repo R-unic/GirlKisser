@@ -556,6 +556,8 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
     // Activation Key Check /////////////////////////////
     for (GKModule* module : modules)
     {
+        // This line was used for testing purposes.
+        //module->activationKey = ImGuiKey_X;
         if (ImGui::IsKeyPressed(module->activationKey))
         {
             module->toggle();
