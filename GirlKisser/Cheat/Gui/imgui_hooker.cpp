@@ -574,7 +574,8 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
         HandleCategoryRendering("Visual", VISUAL);
         HandleCategoryRendering("Movement", MOVEMENT);
         HandleCategoryRendering("Player", PLAYER);
-        HandleCategoryRendering("Exploit", EXPLOIT);
+        HandleCategoryRendering("Rewards", REWARDS);
+        HandleCategoryRendering("Unlockables", UNLOCKABLES);
         HandleCategoryRendering("Uncategorized", NONE);
 
         // Configs

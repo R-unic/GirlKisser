@@ -6,7 +6,7 @@
 #include <d3d11.h>
 #include <list>
 
-// Girlkisser Central Module Vars
+// Girlkisser Module Vars
 template<typename T = int>
 class GKSetting
 {
@@ -103,7 +103,8 @@ enum GKCategory
     VISUAL = 3,
     MOVEMENT = 4,
     PLAYER = 5,
-    EXPLOIT = 6
+    REWARDS = 6,
+    UNLOCKABLES = 7
 };
 
 class GKModule
