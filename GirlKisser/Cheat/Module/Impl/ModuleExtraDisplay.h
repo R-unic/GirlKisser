@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../ModuleBase.h"
 
-static BKCModule __display = { "Extra Display", GENERAL, 0x0, ImGuiKey_Comma, false, {} };
+static GKModule __display = { "Extra Display", GENERAL, 0x0, ImGuiKey_None, false, {} };
 
 // TODO: Check what this does and if it should even exist
 class ModuleExtraDisplay : ModuleBase

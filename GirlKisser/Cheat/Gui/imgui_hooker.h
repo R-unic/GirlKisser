@@ -110,6 +110,7 @@ public:
     std::string name;
     GKCategory category = NONE;
     WPARAM key = 0x0;
+    ImGuiKey activationKey;
     bool enabled = false;
     std::vector<GKSetting<>*> settings = {};
     bool enabled_by_default = enabled;

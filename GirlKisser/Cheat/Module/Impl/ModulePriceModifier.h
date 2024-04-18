@@ -1,8 +1,8 @@
 ﻿#pragma once
 #include "../ModuleBase.h"
 
-static BKCSliderInt __price_modifier_price = BKCSliderInt("Price",  0, -5000, 5000);
-static BKCModule __price_modifier = { "Lottery Price", EXPLOIT, 0x0, ImGuiKey_None, false, {&__price_modifier_price} };
+static GKSliderInt __price_modifier_price = GKSliderInt("Price",  0, -100000, 0, "Only works for lottery boxes and pet training.");
+static GKModule __price_modifier = { "Price Modifier", REWARDS, 0x0, ImGuiKey_None, false, {(GKSetting<>*) &__price_modifier_price} };
 
 class ModulePriceModifier : ModuleBase
 {

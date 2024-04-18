@@ -1,20 +1,18 @@
 ﻿#pragma once
 #include <map>
 
-#include "../IL2CPPResolver/IL2CPP_Resolver.hpp"
+#include "../../IL2CPPResolver/IL2CPP_Resolver.hpp"
 
 #include "../ModuleBase.h"
 #include "../../Hooks/Hooks.h"
 #include "../../Internal/Functions.h"
 
-static BKCSliderInt __aim_bot_target_size = BKCSliderInt("Target Marker Size", 5, 1, 20);
-static BKCCheckbox __aim_bot_target_marker = BKCCheckbox("Target Marker", true);
-static BKCCheckbox __aim_bot_through_walls = BKCCheckbox("Through Walls", false);
-static BKCCheckbox __aim_bot_body_shot = BKCCheckbox("Body Shot", false);
-static BKCModule __aim_bot = { "Aim Bot", COMBAT, 0x0, ImGuiKey_Insert, true, {&__aim_bot_target_marker, &__aim_bot_target_size, &__aim_bot_through_walls, &__aim_bot_body_shot} };
+static GKCheckbox __aim_bot_target_marker = GKCheckbox("Target Marker", true);
+static GKCheckbox __aim_bot_through_walls = GKCheckbox("Through Walls", false);
+static GKCheckbox __aim_bot_body_shot = GKCheckbox("Body Shot", false);
+static GKModule __aim_bot = { "Aim Bot", COMBAT, 0x0, ImGuiKey_None, false, {(GKSetting<>*) & __aim_bot_target_marker, (GKSetting<>*) &__aim_bot_through_walls, (GKSetting<>*) &__aim_bot_body_shot} };
 
-static ImU32 color_marker = ImGui::ColorConvertFloat4ToU32({1.00f, 0.00f, 1.00f, 1.00f});
-static ImU32 color_border = ImGui::ColorConvertFloat4ToU32({0.00f, 0.00f, 0.00f, 1.00f});
+static ImU32 color_marker = ImGui::ColorConvertFloat4ToU32({ 1.00f, 0.00f, 1.00f, 1.00f });
 static std::map<std::string, Unity::Vector3> player_pos_cache;
 static RECT window_size_aim;
 
@@ -87,8 +85,6 @@ public:
         {
             GetWindowRect(GetActiveWindow(), &window_size_aim);
         }
-
-        const int height = window_size_aim.bottom - window_size_aim.top;
         
         Unity::Vector3 prediction;
         void* target = nullptr;
@@ -204,10 +200,9 @@ public:
             };
             Unity::CTransform* t = (Unity::CTransform*)Functions::ComponentGetTransform(Hooks::main_camera);
             if (camera == nullptr) return;
-            Hooks::fov_changer_module->run(nullptr);
             Unity::Vector3 screen;
             Functions::CameraWorldToScreen(camera, &aim_at, &screen);
-            to_draw_aim.push_back({{screen.x, height - screen.y, screen.z}});
+            to_draw_aim.push_back({ screen });
             Unity::Vector3 up = {0, 1, 0};
             Functions::TransformLookAt(t, &aim_at, &up);
             Hooks::aimed_pos = &aim_at;
@@ -234,10 +229,6 @@ public:
 
     void draw_aim(Unity::Vector3 screen_pos)
     {
-        if (is_enabled() && __aim_bot_target_marker.enabled)
-        {
-            ImGui::GetBackgroundDrawList()->AddCircleFilled({screen_pos.x, screen_pos.y}, (float)__aim_bot_target_size.value + 0.5f, color_border);
-            ImGui::GetBackgroundDrawList()->AddCircleFilled({screen_pos.x, screen_pos.y}, (float)__aim_bot_target_size.value, color_marker);
-        }
+        if (is_enabled() && __aim_bot_target_marker.enabled) ImGui::GetBackgroundDrawList()->AddCircleFilled({ screen_pos.x, screen_pos.y }, 10, color_marker);
     }
 };

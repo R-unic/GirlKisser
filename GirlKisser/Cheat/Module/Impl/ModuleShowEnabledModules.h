@@ -4,7 +4,7 @@
 
 #include "../ModuleBase.h"
 
-static GKModule __array_list = { "Show Enabled Modules", NONE, 0x0, true, {} };
+static GKModule __array_list = { "Show Enabled Modules", NONE, 0x0, ImGuiKey_None, true, {} };
 
 static ImU32 color_array = ImGui::ColorConvertFloat4ToU32({0.875f, 0.12f, 0.9f, 0.85f});
 static ImU32 color_bg = ImGui::ColorConvertFloat4ToU32({0.00f, 0.00f, 0.00f, 0.75f});

@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../ModuleBase.h"
 
-static BKCModule __double_jump = { "Double Jump", MOVEMENT, 0x0, ImGuiKey_Backslash, false, { } };
+static GKModule __double_jump = { "Double Jump", MOVEMENT, 0x0, ImGuiKey_None, true, { } };
 
 class ModuleDoubleJump : ModuleBase
 {

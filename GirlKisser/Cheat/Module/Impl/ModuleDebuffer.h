@@ -1,32 +1,32 @@
 ﻿#pragma once
 #include "../ModuleBase.h"
 
-static BKCCheckbox __blind = BKCCheckbox("Blind", true);
-static BKCSlider __blind_duration = BKCSlider("Blind Duration", 9999, 0, 9999);
+static GKCheckbox __blind = GKCheckbox("Blind", false);
+static GKSlider __blind_duration = GKSlider("Blind Duration", 9999, 0, 9999);
 
-static BKCCheckbox __charm = BKCCheckbox{ "Charm", false };
+static GKCheckbox __charm = GKCheckbox("Charm", false);
 
-static BKCCheckbox __curse = BKCCheckbox{ "Curse", false };
-static BKCSlider __curse_duration = BKCSlider("Curse Duration", 9999, 0, 9999);
-static BKCSlider __curse_damage = BKCSlider("Curse Damage", 10, 0, 100);
+static GKCheckbox __curse = GKCheckbox("Curse", false);
+static GKSlider __curse_duration = GKSlider("Curse Duration", 9999, 0, 9999);
+static GKSlider __curse_damage = GKSlider("Curse Damage", 10, 0, 100);
 
-static BKCCheckbox __lightning = BKCCheckbox{ "Lightning", false };
+static GKCheckbox __lightning = GKCheckbox("Lightning", false);
 
-static BKCCheckbox __poison = BKCCheckbox{ "Poison", true };
-static BKCSliderInt __poison_amount = BKCSliderInt("Poison Amount", 9999, 0, 9999);
-static BKCSlider __poison_time = BKCSlider("Poison Time", 9999, 0, 9999);
-static BKCSlider __poison_multi = BKCSlider("Poison Multiplier", 9999, 0, 9999, "This may or may not work!");
+static GKCheckbox __poison = GKCheckbox("Poison", false);
+static GKSliderInt __poison_amount = GKSliderInt("Poison Amount", 9999, 0, 9999);
+static GKSlider __poison_time = GKSlider("Poison Time", 9999, 0, 9999);
+static GKSlider __poison_multi = GKSlider("Poison Multiplier", 9999, 0, 9999, "This may or may not work!");
 
-static BKCCheckbox __slow = BKCCheckbox{ "Slow", true };
-static BKCSlider __slow_duration = BKCSlider("Slow Duration", 9999, 0, 9999);
-static BKCSlider __slow_factor = BKCSlider("Slow Factor", 0.001f, 0.001f, 10);
+static GKCheckbox __slow = GKCheckbox("Slow", false);
+static GKSlider __slow_duration = GKSlider("Slow Duration", 9999, 0, 9999);
+static GKSlider __slow_factor = GKSlider("Slow Factor", 0.001f, 0.001f, 10);
 
-static BKCCheckbox __stun = BKCCheckbox{ "Stun", false };
-static BKCSlider __stun_duration = BKCSlider("Stun Duration", 9999, 0, 9999);
-static BKCSlider __stun_factor = BKCSlider("Stun Factor", 10, 0.001f, 10);
-static BKCSlider __stun_radius = BKCSlider("Stun Radius", 9999, 0, 9999);
+static GKCheckbox __stun = GKCheckbox{ "Stun", false };
+static GKSlider __stun_duration = GKSlider("Stun Duration", 9999, 0, 9999);
+static GKSlider __stun_factor = GKSlider("Stun Factor", 10, 0.001f, 10);
+static GKSlider __stun_radius = GKSlider("Stun Radius", 9999, 0, 9999);
 
-static BKCModule __debuffer = { "Debuffer", COMBAT, 0x0, ImGuiKey_M, true, {&__blind, &__blind_duration, &__charm, &__curse, &__curse_duration, &__curse_damage, &__lightning, &__poison, &__poison_amount, &__slow, &__slow_duration, &__slow_factor, &__stun, &__stun_duration, &__stun_factor, &__stun_radius} };
+static GKModule __debuffer = { "Debuffer", COMBAT, 0x0, ImGuiKey_None, false, {(GKSetting<>*) &__blind, (GKSetting<>*) &__blind_duration, (GKSetting<>*) &__charm, (GKSetting<>*) &__curse, (GKSetting<>*) &__curse_duration, (GKSetting<>*) &__curse_damage, (GKSetting<>*) &__lightning, (GKSetting<>*) &__poison, (GKSetting<>*) &__poison_amount, (GKSetting<>*) &__slow, (GKSetting<>*) &__slow_duration, (GKSetting<>*) &__slow_factor, (GKSetting<>*) &__stun, (GKSetting<>*) &__stun_duration, (GKSetting<>*) &__stun_factor, (GKSetting<>*) &__stun_radius} };
 
 class ModuleDebuffer : ModuleBase
 {

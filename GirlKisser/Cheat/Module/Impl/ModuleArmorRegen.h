@@ -1,7 +1,6 @@
 #pragma once
 #include "../ModuleBase.h"
 
-
 static GKSliderInt __regen_percent = GKSliderInt("Regeneration Percent", 10, 1, 100);
 
 static GKModule __armor_regen = { "Armor Regeneration", PLAYER, 0x0, ImGuiKey_None, false, { (GKSetting<>*)& __regen_percent } };

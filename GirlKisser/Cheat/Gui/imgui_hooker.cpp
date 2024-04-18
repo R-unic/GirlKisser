@@ -552,6 +552,17 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
     ImGui::PushFont(gui_font);
+
+    // Activation Key Check /////////////////////////////
+    for (GKModule* module : modules)
+    {
+        if (ImGui::IsKeyPressed(module->activationKey))
+        {
+            module->toggle();
+        }
+    }
+    /////////////////////////////////////////////////////
+    
     if (c_GuiEnabled)
     {
         ImGui::Begin(full_title.str().c_str());

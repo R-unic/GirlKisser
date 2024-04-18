@@ -2,8 +2,8 @@
 #include "../ModuleBase.h"
 #include "../../Hooks/Hooks.h"
 
-static BKCSlider __oshs_multi = BKCSlider("Damage Multiplier", 1, 1, 100, "Multiplier values too high will cause kicks! (Depending on weapon)");
-static BKCModule __oshs = { "Headshot Modifier", COMBAT, 0x0, ImGuiKey_3, false, {&__oshs_multi} };
+static GKSlider __oshs_multi = GKSlider("Damage Multiplier", 1, 1, 10, "Multiplier values too high will cause kicks! (Depending on weapon)");
+static GKModule __oshs = { "Headshot Modifier", COMBAT, 0x0, ImGuiKey_None, false, {(GKSetting<>*) &__oshs_multi} };
 
 class ModuleHeadshotMultiplier : ModuleBase
 {
@@ -12,7 +12,7 @@ public:
     
     void do_module(void* arg) override
     {
-        set_bool(arg, Offsets::isHeadshotDamageIncreased, true); // isHeadshotDamageIncreased
-        set_float(arg, Offsets::increasedHeadshotDamageMultiplier, __oshs_multi.value); // increasedHeadshotDamageMultiplier
+        set_bool(arg, 0x284, true); // isHeadshotDamageIncreased (0x28c = isReducedHeadshotDamage, maybe applicable to enemies)
+        set_float(arg, 0x288, __oshs_multi.value); // increasedHeadshotDamageMultiplier (0x290 = reducedHeadshotDamageMultiplier, maybe applicable to enemies)
     }
 };
