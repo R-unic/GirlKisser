@@ -552,6 +552,19 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
     ImGui::PushFont(gui_font);
+
+    // Activation Key Check /////////////////////////////
+    for (GKModule* module : modules)
+    {
+        // This line was used for testing purposes.
+        //module->activationKey = ImGuiKey_X;
+        if (ImGui::IsKeyPressed(module->activationKey))
+        {
+            module->toggle();
+        }
+    }
+    /////////////////////////////////////////////////////
+    
     if (c_GuiEnabled)
     {
         ImGui::Begin(full_title.str().c_str());
@@ -562,6 +575,7 @@ void GKImGuiHooker::start(ID3D11RenderTargetView* g_mainRenderTargetView, ID3D11
         HandleCategoryRendering("Movement", MOVEMENT);
         HandleCategoryRendering("Player", PLAYER);
         HandleCategoryRendering("Rewards", REWARDS);
+        HandleCategoryRendering("Unlockables", UNLOCKABLES);
         HandleCategoryRendering("Uncategorized", NONE);
 
         // Configs

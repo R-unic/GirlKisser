@@ -5,7 +5,7 @@
 #include "../ModuleBase.h"
 
 static GKSlider __reach_range = GKSlider("Range", 100, 0, 99999, "Low range values will disable range based weapons! (ex. Flamethrowers & Melee)");
-static GKModule __reach = { "Reach", PLAYER, 0x0, false, { (GKSetting<>*) &__reach_range } };
+static GKModule __reach = { "Reach", PLAYER, 0x0, ImGuiKey_None, false, { (GKSetting<>*) &__reach_range } };
 
 class ModuleReach : ModuleBase
 {

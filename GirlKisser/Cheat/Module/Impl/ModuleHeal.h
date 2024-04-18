@@ -3,7 +3,7 @@
 #include "../../Internal/Functions.h"
 #include "../../Hooks/Hooks.h"
 
-static GKModule __auto_heal = { "Auto Heal", PLAYER, 0x0, false, {} };
+static GKModule __auto_heal = { "Auto Heal", PLAYER, 0x0, ImGuiKey_None, false, {} };
 class ModuleHeal : ModuleBase
 {
 public:

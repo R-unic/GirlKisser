@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../ModuleBase.h"
 
-static GKModule __better_scope = { "Better Scoping", VISUAL, 0x0, false, { } };
+static GKModule __better_scope = { "Better Scoping", VISUAL, 0x0, ImGuiKey_None, false, { } };
 
 class ModuleBetterScope : ModuleBase
 {

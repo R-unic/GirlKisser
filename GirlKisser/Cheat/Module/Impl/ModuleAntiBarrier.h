@@ -1,7 +1,7 @@
-#pragma once
+﻿#pragma once
 #include "../ModuleBase.h"
 
-static GKModule __anti_barrier = { "Anti Barrier", PLAYER, 0x0, true, {} };
+static GKModule __anti_barrier = { "Anti Barrier", PLAYER, 0x0, ImGuiKey_None, true, {} };
 
 class ModuleAntiBarrier : ModuleBase
 {

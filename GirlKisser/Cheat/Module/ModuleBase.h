@@ -10,12 +10,14 @@ public:
     ModuleBase(GKModule* m)
     {
         key = m->key;
+        activationKey = m->activationKey; 
         name = m->name;
         module = m;
         GKImGuiHooker::modules.push_back(m);
     }
     
     WPARAM key = 0x00;
+    ImGuiKey activationKey;
     std::string name;
     GKModule* module;
     

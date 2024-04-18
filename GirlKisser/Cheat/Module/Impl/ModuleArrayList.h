@@ -3,16 +3,17 @@
 #include <imgui.h>
 
 #include "../ModuleBase.h"
+#include "../../Hooks/Hooks.h"
 
-static GKModule __array_list = { "Show Enabled Modules", NONE, 0x0, ImGuiKey_None, true, {} };
+static GKModule __array_list = { "Array List", VISUAL, 0x0, ImGuiKey_Apostrophe, true, {} };
 
-static ImU32 color_array = ImGui::ColorConvertFloat4ToU32({0.875f, 0.12f, 0.9f, 0.85f});
-static ImU32 color_bg = ImGui::ColorConvertFloat4ToU32({0.00f, 0.00f, 0.00f, 0.75f});
+static ImU32 color_array = ImGui::ColorConvertFloat4ToU32({0.91f, 0.64f, 0.13f, 1.00f});
+static ImU32 color_bg = ImGui::ColorConvertFloat4ToU32({0.00f, 0.00f, 0.00f, 0.85f});
 
-class ModuleShowEnabledModules : ModuleBase
+class ModuleArrayList : ModuleBase
 {
 public:
-    ModuleShowEnabledModules() : ModuleBase(&__array_list) {}
+    ModuleArrayList() : ModuleBase(&__array_list) {}
     
     void do_module(void* arg) override
     {
@@ -28,14 +29,15 @@ public:
         for (const auto mod : GKImGuiHooker::modules) module_list.push_back(mod);
         std::sort(module_list.begin(), module_list.end(), alphabetical_cmp());
         
-        for (auto& module : module_list)
+        for (GKModule*& module : module_list)
         {
-            if (module->enabled && module->name != this->module->name) modc++;
+            if (module->enabled) modc++;
         }
+        
         ImGui::GetBackgroundDrawList()->AddRectFilled({x, y}, {x + 200 * GKImGuiHooker::scale_factor, y + modc * (size + 2) + 10}, color_bg, 10);
-        for (auto& module : module_list)
+        for (GKModule*& module : module_list)
         {
-            if (module->enabled && module->name != this->module->name)
+            if (module->enabled)
             {
                 ImGui::GetBackgroundDrawList()->AddText(NULL, size, {x + 5, y + 2}, color_array, module->name.c_str());
                 y += size + 2;

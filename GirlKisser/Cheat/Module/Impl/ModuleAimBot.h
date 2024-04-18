@@ -10,7 +10,7 @@
 static GKCheckbox __aim_bot_target_marker = GKCheckbox("Target Marker", true);
 static GKCheckbox __aim_bot_through_walls = GKCheckbox("Through Walls", false);
 static GKCheckbox __aim_bot_body_shot = GKCheckbox("Body Shot", false);
-static GKModule __aim_bot = { "Aim Bot", COMBAT, 0x0, false, {(GKSetting<>*) & __aim_bot_target_marker, (GKSetting<>*) &__aim_bot_through_walls, (GKSetting<>*) &__aim_bot_body_shot} };
+static GKModule __aim_bot = { "Aim Bot", COMBAT, 0x0, ImGuiKey_None, false, {(GKSetting<>*) & __aim_bot_target_marker, (GKSetting<>*) &__aim_bot_through_walls, (GKSetting<>*) &__aim_bot_body_shot} };
 
 static ImU32 color_marker = ImGui::ColorConvertFloat4ToU32({ 1.00f, 0.00f, 1.00f, 1.00f });
 static std::map<std::string, Unity::Vector3> player_pos_cache;

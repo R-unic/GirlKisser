@@ -4,7 +4,7 @@
 static GKSlider __frost_range = GKSlider("Range",  9999, 0, 9999);
 static GKSlider __frost_damage = GKSlider("Damage Multiplier",  2, 0, 20, "High damage values may cause kicks!");
 static GKSlider __frost_delay = GKSlider("Delay",  0.33f, 0.001f, 2, "Low delay values may cause kicks!");
-static GKModule __frost_aura = { "Frost Aura", COMBAT, 0x0, false, {(GKSetting<>*) &__frost_range, (GKSetting<>*) &__frost_damage, (GKSetting<>*) &__frost_delay} };
+static GKModule __frost_aura = { "Frost Aura", COMBAT, 0x0, ImGuiKey_None, false, {(GKSetting<>*) &__frost_range, (GKSetting<>*) &__frost_damage, (GKSetting<>*) &__frost_delay} };
 
 class ModuleFrostAura : ModuleBase
 {

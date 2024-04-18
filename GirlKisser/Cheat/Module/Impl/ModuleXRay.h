@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../ModuleBase.h"
 
-static GKModule __xray = { "XRay", VISUAL, 0x0, false, {} };
+static GKModule __xray = { "XRay", VISUAL, 0x0, ImGuiKey_None, false, {} };
 
 class ModuleXRay : ModuleBase
 {

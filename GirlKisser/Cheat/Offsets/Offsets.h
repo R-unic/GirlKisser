@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <cstdint>
 
 class Offsets
@@ -33,6 +33,15 @@ public:
     static inline uint64_t RewardMultiplier = 0xC326E0;
     static inline uint64_t DoubleRewards = 0xC33660;
     static inline uint64_t PremiumPass = 0x18881E0;
+    static inline uint64_t CancelKickReason = 0x45D440;
+    static inline uint64_t FindObjectsOfType = 0x4364C10;
+    static inline uint64_t FindObjectOfType = 0x4364AD0;
+    static inline uint64_t TypeGetType = 0x38E6890;
+    static inline uint64_t BehaviourGetEnabled = 0x435C740;
+    static inline uint64_t AddWeapon = 0x638AC0;
+    static inline uint64_t PlayerGetWeaponManager = 0x1B10E60;
+    static inline uint64_t GetItemRecordDict = 0x79E380;
+    static inline uint64_t ItemRecordGetShopId = 0x573C40;
 
     // Fields
     static inline uint64_t scopeSpeed = 0xF8;
@@ -123,4 +132,7 @@ public:
     static inline uint64_t ignoreBarrier = 0x128;
     static inline uint64_t ignoreSlyWolf = 0x129;
     static inline uint64_t ignoreReflector = 0x12A;
+    static inline uint64_t fireImmunity = 0x248;
+    static inline uint64_t bleedingImmunity = 0x249;
+    static inline uint64_t toxicImmunity = 0x24A;
 };

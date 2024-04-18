@@ -3,7 +3,7 @@
 
 static GKSlider __aoe_range = GKSlider("Range",  9999, 0, 9999);
 static GKSlider __aoe_damage = GKSlider("Damage",  5, 0, 100, "High damage values may cause kicks!");
-static GKModule __aoe_bullets = { "AOE Bullets", COMBAT, 0x0, false, {(GKSetting<>*) & __aoe_range, (GKSetting<>*) &__aoe_damage} };
+static GKModule __aoe_bullets = { "AOE Bullets", COMBAT, 0x0, ImGuiKey_None, false, {(GKSetting<>*) & __aoe_range, (GKSetting<>*) &__aoe_damage} };
 
 class ModuleAOEBullets : ModuleBase
 {

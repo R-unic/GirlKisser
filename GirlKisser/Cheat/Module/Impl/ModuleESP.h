@@ -11,7 +11,7 @@ static GKDropdown __esp_style = GKDropdown("ESP Style", "Simple", { "Simple", "C
 static GKSliderInt __esp_thickness = GKSliderInt("Border Thickness", 2, 1, 5);
 static GKSliderInt __esp_corner_rounding = GKSliderInt("Corner Rounding", 0, -10, 10);
 static GKCheckbox __esp_teammates = GKCheckbox("Teammates", false);
-static GKModule __esp = { "ESP", VISUAL, 0x0, false, { (GKSetting<>*) & __esp_style, (GKSetting<>*) & __esp_thickness, (GKSetting<>*) & __esp_corner_rounding, (GKSetting<>*) & __esp_teammates} };
+static GKModule __esp = { "ESP", VISUAL, 0x0, ImGuiKey_None, false, { (GKSetting<>*) & __esp_style, (GKSetting<>*) & __esp_thickness, (GKSetting<>*) & __esp_corner_rounding, (GKSetting<>*) & __esp_teammates} };
 
 static ImU32 color_enemy = ImGui::ColorConvertFloat4ToU32({1.00f, 0.00f, 0.00f, 1.00f});
 static ImU32 color_ally = ImGui::ColorConvertFloat4ToU32({0.33f, 0.33f, 0.33f, 1.00f});

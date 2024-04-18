@@ -2,7 +2,7 @@
 #include "../ModuleBase.h"
 
 static GKSlider __recoil_coeff = GKSlider("Recoil Coefficient", 0, -100, 100, "Recoil values too small/large may cause interesting effects!");
-static GKModule __modify_recoil = { "No Recoil", COMBAT, 0x0, false, { (GKSetting<>*) &__recoil_coeff } };
+static GKModule __modify_recoil = { "No Recoil", COMBAT, 0x0, ImGuiKey_None, false, { (GKSetting<>*) &__recoil_coeff } };
 
 class ModuleRecoil : ModuleBase
 {

@@ -3,7 +3,7 @@
 #include "../../Internal/Functions.h"
 
 static GKSlider __invis_duration = GKSlider("Duration",  5, 0, 1000, "Duration values too high will make invisibility last very long after being disabled!");
-static GKModule __invisibility = { "Invisibility", PLAYER, 0x0, false, {(GKSetting<>*) &__invis_duration} };
+static GKModule __invisibility = { "Invisibility", PLAYER, 0x0, ImGuiKey_None, false, {(GKSetting<>*) &__invis_duration} };
 
 class ModuleInvisibility : ModuleBase
 {

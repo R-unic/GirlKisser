@@ -2,7 +2,7 @@
 #include "../ModuleBase.h"
 
 static GKSlider __score_amount = GKSlider("Amount",  10, 0, 15000, "Use large multiplier values with caution!");
-static GKModule __score_multiplier = { "Score Multiplier", PLAYER , 0x0, false, {(GKSetting<>*) & __score_amount} };
+static GKModule __score_multiplier = { "Score Multiplier", PLAYER , 0x0, ImGuiKey_None, false, {(GKSetting<>*) & __score_amount} };
 
 class ModuleScoreMultiplier : ModuleBase
 {

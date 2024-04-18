@@ -1,8 +1,8 @@
-#pragma once
+﻿#pragma once
 #include "../ModuleBase.h"
 
 static GKCheckbox __season_pass_premium = { "Spoof Premium", true, "Only lasts while enabled." };
-static GKModule __season_pass = { "Season Pass", REWARDS, 0x0, true, { (GKSetting<>*) & __season_pass_premium}};
+static GKModule __season_pass = { "Season Pass", REWARDS, 0x0, ImGuiKey_None, true, { (GKSetting<>*) & __season_pass_premium}};
 
 class ModuleSeasonPass : ModuleBase
 {
