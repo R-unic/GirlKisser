@@ -1,8 +1,8 @@
 ﻿#pragma once
 #include "../ModuleBase.h"
 
-static GKSlider __speed_amount = GKSlider("Amount",  1, 0.01f, 100);
-static GKModule __speed = { "Speed", MOVEMENT, 0x0, false, {(GKSetting<>*) &__speed_amount} };
+static BKCSlider __speed_amount = BKCSlider("Amount",  1, 0.1f, 5);
+static BKCModule __speed = { "Speed", MOVEMENT, 0x0, ImGuiKey_None, false, {&__speed_amount} };
 
 class ModuleSpeed : ModuleBase
 {

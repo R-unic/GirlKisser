@@ -2,8 +2,8 @@
 #include "../ModuleBase.h"
 #include "../../Hooks/Hooks.h"
 
-static GKSlider __ahs_multi = GKSlider("Damage Multiplier", 0, -15, 1);
-static GKModule __anti_hs = { "AntiHeadshot", PLAYER, 0x0, false, {(GKSetting<>*) &__ahs_multi} };
+static BKCSlider __ahs_multi = BKCSlider("Damage Multiplier", 1, 0, 1);
+static BKCModule __anti_hs = { "AntiHeadshot", PLAYER, 0x0, ImGuiKey_X, false, {&__ahs_multi} };
 
 class ModuleAntiHeadshot : ModuleBase
 {

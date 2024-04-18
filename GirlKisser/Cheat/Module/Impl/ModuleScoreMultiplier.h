@@ -1,8 +1,8 @@
 ﻿#pragma once
 #include "../ModuleBase.h"
 
-static GKSlider __score_amount = GKSlider("Amount",  10, 0, 15000, "Use large multiplier values with caution!");
-static GKModule __score_multiplier = { "Score Multiplier", PLAYER , 0x0, false, {(GKSetting<>*) & __score_amount} };
+static BKCSlider __score_amount = BKCSlider("Amount",  10, 0, 9999, "Use large multiplier values with caution!");
+static BKCModule __score_multiplier = { "Score Multiplier", GENERAL, 0x0, ImGuiKey_None, false, {&__score_amount} };
 
 class ModuleScoreMultiplier : ModuleBase
 {
@@ -12,7 +12,7 @@ public:
     void do_module(void* arg) override
     {
         set_bool(arg, Offsets::isBuffPoints, true); // isBuffPoints
-        set_bool(arg, Offsets::buffPointsKillDesigner, true); // buffPointsKillDesigner
+        set_bool(arg,Offsets::buffPointsKillDesigner, true); // buffPointsKillDesigner
         set_bool(arg, Offsets::buffPointsAssistDesigner, true); // buffPointsAssistDesigner
         set_bool(arg, Offsets::buffPointsRevengeDesigner, true); // buffPointsRevengeDesigner
         set_float(arg, Offsets::buffPointsOther, __score_amount.value); // buffPointsOther

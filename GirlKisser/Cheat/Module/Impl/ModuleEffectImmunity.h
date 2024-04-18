@@ -7,7 +7,7 @@ static GKCheckbox __immunity_bleeding = GKCheckbox { "Bleeding", true };
 
 static GKCheckbox __immunity_toxic = GKCheckbox { "Poison", true };
 
-static GKModule __immunity = { "Effect Immunity", PLAYER, 0x0, true, {(GKSetting<>*)&__immunity_fire, (GKSetting<>*)&__immunity_bleeding, (GKSetting<>*)&__immunity_toxic} };
+static GKModule __immunity = { "Effect Immunity", PLAYER, 0x0, ImGuiKey_None, true, {(GKSetting<>*)&__immunity_fire, (GKSetting<>*)&__immunity_bleeding, (GKSetting<>*)&__immunity_toxic} };
 
 
 class ModuleEffectImmunity : ModuleBase

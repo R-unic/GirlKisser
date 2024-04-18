@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "../ModuleBase.h"
 
-static GKModule __infinite_gem_claim = { "Infinite Gem Claim", REWARDS, 0x0, false, {} };
+static BKCModule __infinite_gem_claim = { "Infinite Gem Claim", EXPLOIT, 0x0, ImGuiKey_8, false, {} };
 
 class ModuleInfiniteGemClaim : ModuleBase
 {

@@ -3,8 +3,8 @@
 #include "../../Gui/imgui_hooker.h"
 
 class ModuleBase;
-static GKSliderInt __rewards_multiplier_amount = GKSliderInt("Amount", 3, 1, 3500);
-static GKModule __rewards_multiplier = { "Rewards Multiplier", REWARDS, 0x0, true, {(GKSetting<>*) &__rewards_multiplier_amount} };
+static BKCSliderInt __rewards_multiplier_amount = BKCSliderInt("Amount",  10, 1, 250);
+static BKCModule __rewards_multiplier = { "Rewards Multiplier", EXPLOIT, 0x0, ImGuiKey_None, false, {&__rewards_multiplier_amount} };
 
 class ModuleRewardsMultiplier : ModuleBase
 {
